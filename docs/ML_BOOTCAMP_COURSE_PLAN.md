@@ -1,325 +1,325 @@
-# MACHINE LEARNING BOOTCAMP: FULL COURSE PLAN WITH HANDS-ON PRACTICE
+# MACHINE LEARNING BOOTCAMP: ПОЛНЫЙ ПЛАН КУРСА С ПРАКТИКОЙ НА КАЖДУЮ ТЕМУ
 
-> Complete curriculum: 11 modules, 40 topics, 160 lessons (120 theory + 40 practice)
-
----
-
-## MODULE 1: FOUNDATIONS & MINDSET ENGINEER
-
-### Topic 1.1: Professional Environment Setup
-- **Lesson 1.1.1:** Installing Python, Jupyter, VS Code + ML extensions
-- **Lesson 1.1.2:** Setting up Git, GitHub, creating a course repository
-- **Lesson 1.1.3:** Docker basics + creating a container for ML projects
-- **Lesson 1.1.4:** PRACTICE: Creating and configuring your ML workspace
-
-### Topic 1.2: Python for ML Engineers
-- **Lesson 1.2.1:** Advanced Python: decorators, generators, context managers
-- **Lesson 1.2.2:** Asynchronous programming for ML pipelines
-- **Lesson 1.2.3:** Code optimization: profiling, memory management
-- **Lesson 1.2.4:** PRACTICE: Writing an efficient ETL pipeline
-
-### Topic 1.3: Reproducibility Tools
-- **Lesson 1.3.1:** ML project structure (CookieCutter, templates)
-- **Lesson 1.3.2:** Virtual environments and dependency management
-- **Lesson 1.3.3:** Configuration files for ML experiments
-- **Lesson 1.3.4:** PRACTICE: Creating a template for ML projects
-
-### Topic 1.4: Linux and Command Line
-- **Lesson 1.4.1:** Advanced bash: pipes, redirects, job control
-- **Lesson 1.4.2:** Resource monitoring: htop, nvidia-smi, systemd
-- **Lesson 1.4.3:** Task automation: cron, systemd timers
-- **Lesson 1.4.4:** PRACTICE: Creating scripts for ML infrastructure management
+> Полная программа: 11 модулей, 40 тем, 160 уроков (120 теоретических + 40 практических)
 
 ---
 
-## MODULE 2: DATA-CENTRIC MACHINE LEARNING
+## МОДУЛЬ 1: FOUNDATIONS & MINDSET ENGINEER
 
-### Topic 2.1: Advanced Pandas
-- **Lesson 2.1.1:** MultiIndex, pivot tables, complex groupings
-- **Lesson 2.1.2:** Memory optimization: dtypes, chunks, sparse arrays
-- **Lesson 2.1.3:** Time and dates: timezones, resampling, rolling windows
-- **Lesson 2.1.4:** PRACTICE: Time series sales analysis
+### Тема 1.1: Установка профессионального окружения
+- **Урок 1.1.1:** Установка Python, Jupyter, VS Code + расширения для ML
+- **Урок 1.1.2:** Настройка Git, GitHub, создание репозитория курса
+- **Урок 1.1.3:** Docker основы + создание контейнера для ML проектов
+- **Урок 1.1.4:** ПРАКТИКА: Создание и настройка своего ML workspace
 
-### Topic 2.2: High-Performance NumPy
-- **Lesson 2.2.1:** Operation vectorization, broadcasting, ufuncs
-- **Lesson 2.2.2:** Advanced indexing: boolean, fancy, structured arrays
-- **Lesson 2.2.3:** NumPy with Cython and Numba for acceleration
-- **Lesson 2.2.4:** PRACTICE: Implementing algorithms from scratch with NumPy
+### Тема 1.2: Python для ML инженера
+- **Урок 1.2.1:** Продвинутый Python: декораторы, генераторы, context managers
+- **Урок 1.2.2:** Асинхронное программирование для ML пайплайнов
+- **Урок 1.2.3:** Оптимизация кода: profiling, memory management
+- **Урок 1.2.4:** ПРАКТИКА: Написание эффективного ETL пайплайна
 
-### Topic 2.3: Feature Engineering Mastery
-- **Lesson 2.3.1:** Creating features for time series
-- **Lesson 2.3.2:** Target encoding, mean encoding, likelihood encoding
-- **Lesson 2.3.3:** Automatic feature engineering with FeatureTools
-- **Lesson 2.3.4:** PRACTICE: Feature engineering for a Kaggle competition
+### Тема 1.3: Инструменты репроизводимости
+- **Урок 1.3.1:** Структура ML проектов (CookieCutter, templates)
+- **Урок 1.3.2:** Виртуальные окружения и dependency management
+- **Урок 1.3.3:** Конфигурационные файлы для ML экспериментов
+- **Урок 1.3.4:** ПРАКТИКА: Создание шаблона для ML проекта
 
-### Topic 2.4: Advanced Visualization
-- **Lesson 2.4.1:** Plotly and interactive dashboards
-- **Lesson 2.4.2:** High-dimensional data visualization (t-SNE, UMAP)
-- **Lesson 2.4.3:** Creating reports with Pandas Profiling
-- **Lesson 2.4.4:** PRACTICE: Creating an interactive EDA dashboard
-
----
-
-## MODULE 3: CLASSICAL ML: ALGORITHMS & PRODUCTION THINKING
-
-### Topic 3.1: Linear Models in Depth
-- **Lesson 3.1.1:** Mathematics of linear models + regularization
-- **Lesson 3.1.2:** Interpretability: coefficients, p-values, confidence intervals
-- **Lesson 3.1.3:** GLM: logistic, Poisson regressions
-- **Lesson 3.1.4:** PRACTICE: Customer churn prediction with interpretation
-
-### Topic 3.2: Classification and Metrics
-- **Lesson 3.2.1:** Classification metrics: from Accuracy to PR-AUC
-- **Lesson 3.2.2:** Probability calibration, Brier score
-- **Lesson 3.2.3:** Stratification, cross-validation for imbalanced data
-- **Lesson 3.2.4:** PRACTICE: Classification with business metric optimization
-
-### Topic 3.3: Clustering and Segmentation
-- **Lesson 3.3.1:** K-means++, determining the number of clusters
-- **Lesson 3.3.2:** Hierarchical clustering, DBSCAN, HDBSCAN
-- **Lesson 3.3.3:** Clustering quality metrics, cluster interpretation
-- **Lesson 3.3.4:** PRACTICE: User segmentation for marketing
-
-### Topic 3.4: Recommendation Systems
-- **Lesson 3.4.1:** Collaborative filtering: user-based, item-based
-- **Lesson 3.4.2:** Matrix factorization: SVD, ALS
-- **Lesson 3.4.3:** Content-based recommendations, hybrid approaches
-- **Lesson 3.4.4:** PRACTICE: Building a recommendation system for e-commerce
+### Тема 1.4: Linux и командная строка
+- **Урок 1.4.1:** Продвинутый bash: pipes, redirects, job control
+- **Урок 1.4.2:** Мониторинг ресурсов: htop, nvidia-smi, systemd
+- **Урок 1.4.3:** Автоматизация задач: cron, systemd timers
+- **Урок 1.4.4:** ПРАКТИКА: Создание скриптов для управления ML инфраструктурой
 
 ---
 
-## MODULE 4: ENSEMBLE MASTERY & HYPERPARAMETER OPTIMIZATION
+## МОДУЛЬ 2: DATA-CENTRIC MACHINE LEARNING
 
-### Topic 4.1: Decision Trees
-- **Lesson 4.1.1:** Tree building algorithms: CART, C4.5
-- **Lesson 4.1.2:** Splitting criteria: Gini, Entropy, MSE
-- **Lesson 4.1.3:** Tree pruning, fighting overfitting
-- **Lesson 4.1.4:** PRACTICE: Implementing a decision tree from scratch
+### Тема 2.1: Продвинутый Pandas
+- **Урок 2.1.1:** MultiIndex, pivot tables, сложные группировки
+- **Урок 2.1.2:** Оптимизация памяти: dtypes, chunks, sparse arrays
+- **Урок 2.1.3:** Время и даты: timezones, resampling, rolling windows
+- **Урок 2.1.4:** ПРАКТИКА: Анализ временных рядов продаж
 
-### Topic 4.2: Random Forest
-- **Lesson 4.2.1:** Bagging, Out-of-Bag evaluation, feature importance
-- **Lesson 4.2.2:** Extremely Randomized Trees, Random Patches
-- **Lesson 4.2.3:** RF interpretability: partial dependence plots
-- **Lesson 4.2.4:** PRACTICE: Random Forest for a regression task
+### Тема 2.2: Высокопроизводительный NumPy
+- **Урок 2.2.1:** Векторизация операций, broadcasting, ufuncs
+- **Урок 2.2.2:** Advanced indexing: boolean, fancy, structured arrays
+- **Урок 2.2.3:** NumPy с Cython и Numba для ускорения
+- **Урок 2.2.4:** ПРАКТИКА: Реализация алгоритмов с нуля на NumPy
 
-### Topic 4.3: Gradient Boosting
-- **Lesson 4.3.1:** XGBoost: algorithm, parameters, tuning
-- **Lesson 4.3.2:** LightGBM: GPU acceleration, categorical features
-- **Lesson 4.3.3:** CatBoost: handling categorical variables
-- **Lesson 4.3.4:** PRACTICE: Comparing boosting algorithms on real data
+### Тема 2.3: Feature Engineering мастерство
+- **Урок 2.3.1:** Создание features для временных рядов
+- **Урок 2.3.2:** Target encoding, mean encoding, likelihood encoding
+- **Урок 2.3.3:** Автоматический feature engineering с FeatureTools
+- **Урок 2.3.4:** ПРАКТИКА: Feature engineering для Kaggle конкурса
 
-### Topic 4.4: Ensembling and Optimization
-- **Lesson 4.4.1:** Stacking, Blending, Voting classifiers
-- **Lesson 4.4.2:** Bayesian optimization with Optuna
-- **Lesson 4.4.3:** Hyperopt, SMAC, other optimization frameworks
-- **Lesson 4.4.4:** PRACTICE: Building an ensemble for a Kaggle competition
-
----
-
-## MODULE 5: DEEP LEARNING & MODERN ARCHITECTURES
-
-### Topic 5.1: Neural Network Fundamentals
-- **Lesson 5.1.1:** Forward/backward propagation, autograd
-- **Lesson 5.1.2:** Activation functions, weight initialization
-- **Lesson 5.1.3:** Optimizers: SGD, Adam, RMSprop, Lion
-- **Lesson 5.1.4:** PRACTICE: Implementing a neural network from scratch with NumPy
-
-### Topic 5.2: Convolutional Neural Networks (CNN)
-- **Lesson 5.2.1:** CNN architectures: LeNet, AlexNet, VGG, ResNet
-- **Lesson 5.2.2:** Transfer learning, fine-tuning pre-trained models
-- **Lesson 5.2.3:** Visualizing CNN: CAM, Grad-CAM, feature visualization
-- **Lesson 5.2.4:** PRACTICE: Image classification with transfer learning
-
-### Topic 5.3: Text Processing (NLP)
-- **Lesson 5.3.1:** Word embeddings: Word2Vec, GloVe, FastText
-- **Lesson 5.3.2:** RNN, LSTM, GRU for sequences
-- **Lesson 5.3.3:** Attention mechanism, Transformer architecture
-- **Lesson 5.3.4:** PRACTICE: Building a chatbot with seq2seq architecture
-
-### Topic 5.4: Modern Language Models
-- **Lesson 5.4.1:** BERT: architecture, pre-training, fine-tuning
-- **Lesson 5.4.2:** GPT architecture, text generation
-- **Lesson 5.4.3:** Prompt engineering, few-shot learning
-- **Lesson 5.4.4:** PRACTICE: Fine-tuning BERT for a classification task
+### Тема 2.4: Продвинутая визуализация
+- **Урок 2.4.1:** Plotly и интерактивные дашборды
+- **Урок 2.4.2:** Визуализация высокоразмерных данных (t-SNE, UMAP)
+- **Урок 2.4.3:** Создание отчетов с помощью Pandas Profiling
+- **Урок 2.4.4:** ПРАКТИКА: Создание интерактивного дашборда для EDA
 
 ---
 
-## MODULE 6: LOW-LEVEL ML & PERFORMANCE OPTIMIZATION
+## МОДУЛЬ 3: CLASSICAL ML: ALGORITHMS & PRODUCTION THINKING
 
-### Topic 6.1: C++ for ML
-- **Lesson 6.1.1:** C++ fundamentals: pointers, references, RAII
-- **Lesson 6.1.2:** STL containers, algorithms, iterators
-- **Lesson 6.1.3:** Python C extensions, pybind11 bindings
-- **Lesson 6.1.4:** PRACTICE: Creating a Python library in C++
+### Тема 3.1: Линейные модели в глубину
+- **Урок 3.1.1:** Математика линейных моделей + регуляризация
+- **Урок 3.1.2:** Интерпретируемость: коэффициенты, p-values, confidence intervals
+- **Урок 3.1.3:** GLM: логистическая, пуассоновская регрессии
+- **Урок 3.1.4:** ПРАКТИКА: Предсказание оттока клиентов с интерпретацией
 
-### Topic 6.2: CUDA Programming
-- **Lesson 6.2.1:** GPU architecture, CUDA programming model
-- **Lesson 6.2.2:** Kernel functions, memory hierarchy, synchronization
-- **Lesson 6.2.3:** CUDA with Python: Numba, CuPy, PyTorch CUDA
-- **Lesson 6.2.4:** PRACTICE: Writing a CUDA kernel for matrix multiplication
+### Тема 3.2: Классификация и метрики
+- **Урок 3.2.1:** Метрики классификации: от Accuracy до PR-AUC
+- **Урок 3.2.2:** Калибровка вероятностей, Brier score
+- **Урок 3.2.3:** Стратификация, cross-validation для несбалансированных данных
+- **Урок 3.2.4:** ПРАКТИКА: Классификация с оптимизацией под бизнес-метрики
 
-### Topic 6.3: Performance Optimization
-- **Lesson 6.3.1:** Python code profiling: cProfile, line_profiler
-- **Lesson 6.3.2:** Vectorization with NumPy, avoiding Python loops
-- **Lesson 6.3.3:** Just-in-time compilation with Numba
-- **Lesson 6.3.4:** PRACTICE: Speeding up an ML pipeline by 10x
+### Тема 3.3: Кластеризация и сегментация
+- **Урок 3.3.1:** K-means++, определение числа кластеров
+- **Урок 3.3.2:** Иерархическая кластеризация, DBSCAN, HDBSCAN
+- **Урок 3.3.3:** Метрики качества кластеризации, интерпретация кластеров
+- **Урок 3.3.4:** ПРАКТИКА: Сегментация пользователей для маркетинга
 
-### Topic 6.4: Quantization and Model Compression
-- **Lesson 6.4.1:** Quantization techniques: post-training, quantization-aware
-- **Lesson 6.4.2:** Pruning, distillation, other compression methods
-- **Lesson 6.4.3:** ONNX runtime, TensorRT for inference
-- **Lesson 6.4.4:** PRACTICE: Compressing a model for mobile deployment
-
----
-
-## MODULE 7: ML ENGINEERING & MLOPS
-
-### Topic 7.1: ML Pipelines
-- **Lesson 7.1.1:** Scikit-learn pipelines, custom transformers
-- **Lesson 7.1.2:** Apache Airflow for pipeline orchestration
-- **Lesson 7.1.3:** Kubeflow Pipelines, MLflow Projects
-- **Lesson 7.1.4:** PRACTICE: Creating an end-to-end ML pipeline
-
-### Topic 7.2: Versioning and Experiments
-- **Lesson 7.2.1:** DVC for data and model versioning
-- **Lesson 7.2.2:** MLflow Tracking, Weights & Biases for experiments
-- **Lesson 7.2.3:** Reproducibility: Docker, environment management
-- **Lesson 7.2.4:** PRACTICE: Setting up an experiment tracking system
-
-### Topic 7.3: Feature Store and Data
-- **Lesson 7.3.1:** Feature Store concept, Feast framework
-- **Lesson 7.3.2:** Feature serving, online/offline features
-- **Lesson 7.3.3:** Data validation with Great Expectations
-- **Lesson 7.3.4:** PRACTICE: Building a Feature Store for a project
-
-### Topic 7.4: Deployment and Monitoring
-- **Lesson 7.4.1:** FastAPI for ML services, OpenAPI documentation
-- **Lesson 7.4.2:** Docker containerization, Kubernetes deployment
-- **Lesson 7.4.3:** Monitoring: Prometheus, Grafana, data drift detection
-- **Lesson 7.4.4:** PRACTICE: Deploying an ML service to the cloud
+### Тема 3.4: Рекомендательные системы
+- **Урок 3.4.1:** Коллаборативная фильтрация: user-based, item-based
+- **Урок 3.4.2:** Matrix factorization: SVD, ALS
+- **Урок 3.4.3:** Content-based рекомендации, hybrid подходы
+- **Урок 3.4.4:** ПРАКТИКА: Построение рекомендательной системы для e-commerce
 
 ---
 
-## MODULE 8: REINFORCEMENT LEARNING & AUTONOMOUS SYSTEMS
+## МОДУЛЬ 4: ENSEMBLE MASTERY & HYPERPARAMETER OPTIMIZATION
 
-### Topic 8.1: Reinforcement Learning Fundamentals
-- **Lesson 8.1.1:** MDP, value functions, policy, Bellman equations
-- **Lesson 8.1.2:** Q-learning, SARSA, tabular methods
-- **Lesson 8.1.3:** Exploration vs exploitation strategies
-- **Lesson 8.1.4:** PRACTICE: Implementing Q-learning for GridWorld
+### Тема 4.1: Деревья решений
+- **Урок 4.1.1:** Алгоритмы построения деревьев: CART, C4.5
+- **Урок 4.1.2:** Критерии разделения: Gini, Entropy, MSE
+- **Урок 4.1.3:** Обрезка деревьев, борьба с переобучением
+- **Урок 4.1.4:** ПРАКТИКА: Реализация дерева решений с нуля
 
-### Topic 8.2: Deep Q Networks
-- **Lesson 8.2.1:** DQN architecture, experience replay, target networks
-- **Lesson 8.2.2:** Double DQN, Dueling DQN, Prioritized Experience Replay
-- **Lesson 8.2.3:** Multi-agent reinforcement learning
-- **Lesson 8.2.4:** PRACTICE: Training DQN for CartPole game
+### Тема 4.2: Random Forest
+- **Урок 4.2.1:** Bagging, Out-of-Bag оценка, feature importance
+- **Урок 4.2.2:** Extremely Randomized Trees, Random Patches
+- **Урок 4.2.3:** Интерпретируемость RF: partial dependence plots
+- **Урок 4.2.4:** ПРАКТИКА: Random Forest для задачи регрессии
 
-### Topic 8.3: Policy Gradient Methods
-- **Lesson 8.3.1:** REINFORCE algorithm, policy gradients
-- **Lesson 8.3.2:** Actor-Critic methods, A2C, A3C
-- **Lesson 8.3.3:** PPO, TRPO, modern policy optimization
-- **Lesson 8.3.4:** PRACTICE: Implementing PPO for continuous control
+### Тема 4.3: Gradient Boosting
+- **Урок 4.3.1:** XGBoost: алгоритм, параметры, tuning
+- **Урок 4.3.2:** LightGBM: GPU ускорение, categorical features
+- **Урок 4.3.3:** CatBoost: обработка категориальных переменных
+- **Урок 4.3.4:** ПРАКТИКА: Сравнение boosting алгоритмов на реальных данных
 
-### Topic 8.4: Imitation Learning
-- **Lesson 8.4.1:** Behavioral cloning, dataset aggregation
-- **Lesson 8.4.2:** Inverse reinforcement learning
-- **Lesson 8.4.3:** GAIL, adversarial imitation learning
-- **Lesson 8.4.4:** PRACTICE: Training an agent with imitation learning
-
----
-
-## MODULE 9: ML SYSTEM DESIGN & ARCHITECTURE
-
-### Topic 9.1: Designing ML Systems
-- **Lesson 9.1.1:** Microservice architecture for ML
-- **Lesson 9.1.2:** Design patterns in ML: Feature Store, Model Serving
-- **Lesson 9.1.3:** Data lakes, data warehouses for ML
-- **Lesson 9.1.4:** PRACTICE: Designing a recommendation system
-
-### Topic 9.2: Scaling and Optimization
-- **Lesson 9.2.1:** Horizontal scaling, load balancing for inference
-- **Lesson 9.2.2:** Caching, CDN for ML services
-- **Lesson 9.2.3:** Cost optimization in cloud environments
-- **Lesson 9.2.4:** PRACTICE: Optimizing costs for an ML pipeline
-
-### Topic 9.3: Security and Reliability
-- **Lesson 9.3.1:** Adversarial attacks, model security
-- **Lesson 9.3.2:** Privacy preserving ML: federated learning, differential privacy
-- **Lesson 9.3.3:** Fault tolerance, retry mechanisms, circuit breakers
-- **Lesson 9.3.4:** PRACTICE: Defending a model against adversarial attacks
-
-### Topic 9.4: Case Studies
-- **Lesson 9.4.1:** YouTube recommendations architecture
-- **Lesson 9.4.2:** Netflix ML system
-- **Lesson 9.4.3:** Uber Michelangelo, Facebook FBLearner
-- **Lesson 9.4.4:** PRACTICE: Analysis and improvement proposals for a real ML system
+### Тема 4.4: Ансамблирование и оптимизация
+- **Урок 4.4.1:** Stacking, Blending, Voting классификаторы
+- **Урок 4.4.2:** Байесовская оптимизация с Optuna
+- **Урок 4.4.3:** Hyperopt, SMAC, другие фреймворки оптимизации
+- **Урок 4.4.4:** ПРАКТИКА: Построение ансамбля для Kaggle competition
 
 ---
 
-## MODULE 10: CAPSTONE PROJECT: END-TO-END AUTONOMOUS SYSTEM
+## МОДУЛЬ 5: DEEP LEARNING & MODERN ARCHITECTURES
 
-### Topic 10.1: Planning and Design
-- **Lesson 10.1.1:** Project selection, requirements formulation
-- **Lesson 10.1.2:** System design documentation, architecture
-- **Lesson 10.1.3:** Development planning, milestones
-- **Lesson 10.1.4:** PRACTICE: Creating a design doc for the chosen project
+### Тема 5.1: Нейронные сети основы
+- **Урок 5.1.1:** Forward/backward propagation, autograd
+- **Урок 5.1.2:** Функции активации, инициализация весов
+- **Урок 5.1.3:** Оптимизаторы: SGD, Adam, RMSprop, Lion
+- **Урок 5.1.4:** ПРАКТИКА: Реализация нейронной сети с нуля на NumPy
 
-### Topic 10.2: Core Functionality Implementation
-- **Lesson 10.2.1:** Data collection, preprocessing pipelines
-- **Lesson 10.2.2:** Model development, experimentation
-- **Lesson 10.2.3:** Integration, API development
-- **Lesson 10.2.4:** PRACTICE: Implementing the core ML functionality
+### Тема 5.2: Сверточные сети (CNN)
+- **Урок 5.2.1:** Архитектуры CNN: LeNet, AlexNet, VGG, ResNet
+- **Урок 5.2.2:** Transfer learning, fine-tuning pre-trained моделей
+- **Урок 5.2.3:** Visualizing CNN: CAM, Grad-CAM, feature visualization
+- **Урок 5.2.4:** ПРАКТИКА: Классификация изображений с transfer learning
 
-### Topic 10.3: Deployment and Monitoring
-- **Lesson 10.3.1:** CI/CD for ML, automated testing
-- **Lesson 10.3.2:** Production deployment, canary releases
-- **Lesson 10.3.3:** Monitoring, alerting, maintenance
-- **Lesson 10.3.4:** PRACTICE: Deploying the system in a production-like environment
+### Тема 5.3: Обработка текста (NLP)
+- **Урок 5.3.1:** Word embeddings: Word2Vec, GloVe, FastText
+- **Урок 5.3.2:** RNN, LSTM, GRU для последовательностей
+- **Урок 5.3.3:** Attention mechanism, Transformer архитектура
+- **Урок 5.3.4:** ПРАКТИКА: Создание чат-бота с seq2seq архитектурой
 
-### Topic 10.4: Documentation and Presentation
-- **Lesson 10.4.1:** Technical documentation, README, API docs
-- **Lesson 10.4.2:** Creating demos, screencasts, usage examples
-- **Lesson 10.4.3:** Preparing a presentation for stakeholders
-- **Lesson 10.4.4:** PRACTICE: Final project presentation
-
----
-
-## MODULE 11: CAREER & INTERVIEW PREPARATION
-
-### Topic 11.1: Resume and Portfolio Preparation
-- **Lesson 11.1.1:** Creating an ATS-friendly resume for ML engineers
-- **Lesson 11.1.2:** GitHub portfolio: structure, README, projects
-- **Lesson 11.1.3:** LinkedIn profile, personal branding
-- **Lesson 11.1.4:** PRACTICE: Creating a complete document package for job searching
-
-### Topic 11.2: Technical Interviews
-- **Lesson 11.2.1:** ML theory: breakdown of typical questions
-- **Lesson 11.2.2:** Coding interviews: LeetCode patterns for ML
-- **Lesson 11.2.3:** System design interviews: approaches and frameworks
-- **Lesson 11.2.4:** PRACTICE: Mock technical interview
-
-### Topic 11.3: Behavioral Interviews and Negotiations
-- **Lesson 11.3.1:** STAR method, behavioral questions for ML
-- **Lesson 11.3.2:** Offer negotiation: salary, equity, benefits
-- **Lesson 11.3.3:** Choosing between companies: startups vs corporations
-- **Lesson 11.3.4:** PRACTICE: Mock behavioral interview and negotiations
+### Тема 5.4: Современные языковые модели
+- **Урок 5.4.1:** BERT: архитектура, pre-training, fine-tuning
+- **Урок 5.4.2:** GPT архитектура, генерация текста
+- **Урок 5.4.3:** Prompt engineering, few-shot learning
+- **Урок 5.4.4:** ПРАКТИКА: Fine-tuning BERT для classification задачи
 
 ---
 
-## Course Statistics
+## МОДУЛЬ 6: LOW-LEVEL ML & PERFORMANCE OPTIMIZATION
 
-| Metric | Count |
+### Тема 6.1: C++ для ML
+- **Урок 6.1.1:** Основы C++: pointers, references, RAII
+- **Урок 6.1.2:** STL контейнеры, алгоритмы, итераторы
+- **Урок 6.1.3:** Python C extensions, pybind11 биндинги
+- **Урок 6.1.4:** ПРАКТИКА: Создание Python библиотеки на C++
+
+### Тема 6.2: CUDA программирование
+- **Урок 6.2.1:** Архитектура GPU, CUDA programming model
+- **Урок 6.2.2:** Kernel functions, memory hierarchy, synchronization
+- **Урок 6.2.3:** CUDA с Python: Numba, CuPy, PyTorch CUDA
+- **Урок 6.2.4:** ПРАКТИКА: Написание CUDA kernel для матричного умножения
+
+### Тема 6.3: Оптимизация производительности
+- **Урок 6.3.1:** Профилирование Python кода: cProfile, line_profiler
+- **Урок 6.3.2:** Векторизация с NumPy, избегание Python loops
+- **Урок 6.3.3:** Just-in-time компиляция с Numba
+- **Урок 6.3.4:** ПРАКТИКА: Ускорение ML пайплайна в 10 раз
+
+### Тема 6.4: Квантизация и сжатие моделей
+- **Урок 6.4.1:** Техники квантизации: post-training, quantization-aware
+- **Урок 6.4.2:** Pruning, distillation, другие методы сжатия
+- **Урок 6.4.3:** ONNX runtime, TensorRT для инференса
+- **Урок 6.4.4:** ПРАКТИКА: Сжатие модели для мобильного deployment
+
+---
+
+## МОДУЛЬ 7: ML ENGINEERING & MLOPS
+
+### Тема 7.1: ML Pipelines
+- **Урок 7.1.1:** Scikit-learn pipelines, custom transformers
+- **Урок 7.1.2:** Apache Airflow для оркестрации пайплайнов
+- **Урок 7.1.3:** Kubeflow Pipelines, MLflow Projects
+- **Урок 7.1.4:** ПРАКТИКА: Создание end-to-end ML пайплайна
+
+### Тема 7.2: Версионирование и эксперименты
+- **Урок 7.2.1:** DVC для версионирования данных и моделей
+- **Урок 7.2.2:** MLflow Tracking, Weights & Biases для экспериментов
+- **Урок 7.2.3:** Репроизводимость: Docker, environment management
+- **Урок 7.2.4:** ПРАКТИКА: Настройка системы трекинга экспериментов
+
+### Тема 7.3: Feature Store и данные
+- **Урок 7.3.1:** Концепция Feature Store, Feast framework
+- **Урок 7.3.2:** Feature serving, online/offline features
+- **Урок 7.3.3:** Data validation с Great Expectations
+- **Урок 7.3.4:** ПРАКТИКА: Создание Feature Store для проекта
+
+### Тема 7.4: Деплой и мониторинг
+- **Урок 7.4.1:** FastAPI для ML сервисов, OpenAPI документация
+- **Урок 7.4.2:** Docker контейнеризация, Kubernetes deployment
+- **Урок 7.4.3:** Мониторинг: Prometheus, Grafana, data drift detection
+- **Урок 7.4.4:** ПРАКТИКА: Деплой ML сервиса в облако
+
+---
+
+## МОДУЛЬ 8: REINFORCEMENT LEARNING & AUTONOMOUS SYSTEMS
+
+### Тема 8.1: Основы Reinforcement Learning
+- **Урок 8.1.1:** MDP, value functions, policy, Bellman equations
+- **Урок 8.1.2:** Q-learning, SARSA, tabular methods
+- **Урок 8.1.3:** Exploration vs exploitation strategies
+- **Урок 8.1.4:** ПРАКТИКА: Реализация Q-learning для GridWorld
+
+### Тема 8.2: Deep Q Networks
+- **Урок 8.2.1:** DQN архитектура, experience replay, target networks
+- **Урок 8.2.2:** Double DQN, Dueling DQN, Prioritized Experience Replay
+- **Урок 8.2.3:** Multi-agent reinforcement learning
+- **Урок 8.2.4:** ПРАКТИКА: Обучение DQN для игры CartPole
+
+### Тема 8.3: Policy Gradient методы
+- **Урок 8.3.1:** REINFORCE algorithm, policy gradients
+- **Урок 8.3.2:** Actor-Critic methods, A2C, A3C
+- **Урок 8.3.3:** PPO, TRPO, современные policy optimization
+- **Урок 8.3.4:** ПРАКТИКА: Реализация PPO для непрерывного контроля
+
+### Тема 8.4: Imitation Learning
+- **Урок 8.4.1:** Behavioral cloning, dataset aggregation
+- **Урок 8.4.2:** Inverse reinforcement learning
+- **Урок 8.4.3:** GAIL, adversarial imitation learning
+- **Урок 8.4.4:** ПРАКТИКА: Обучение агента с imitation learning
+
+---
+
+## МОДУЛЬ 9: ML SYSTEM DESIGN & ARCHITECTURE
+
+### Тема 9.1: Проектирование ML систем
+- **Урок 9.1.1:** Микросервисная архитектура для ML
+- **Урок 9.1.2:** Design patterns в ML: Feature Store, Model Serving
+- **Урок 9.1.3:** Data lakes, data warehouses для ML
+- **Урок 9.1.4:** ПРАКТИКА: Проектирование системы рекомендаций
+
+### Тема 9.2: Масштабирование и оптимизация
+- **Урок 9.2.1:** Horizontal scaling, load balancing для inference
+- **Урок 9.2.2:** Кэширование, CDN для ML сервисов
+- **Урок 9.2.3:** Cost optimization в облачных средах
+- **Урок 9.2.4:** ПРАКТИКА: Оптимизация costs для ML пайплайна
+
+### Тема 9.3: Безопасность и надежность
+- **Урок 9.3.1:** Adversarial attacks, model security
+- **Урок 9.3.2:** Privacy preserving ML: federated learning, differential privacy
+- **Урок 9.3.3:** Fault tolerance, retry mechanisms, circuit breakers
+- **Урок 9.3.4:** ПРАКТИКА: Защита модели от adversarial attacks
+
+### Тема 9.4: Case studies
+- **Урок 9.4.1:** Архитектура YouTube рекомендаций
+- **Урок 9.4.2:** ML система Netflix
+- **Урок 9.4.3:** Uber Michelangelo, Facebook FBLearner
+- **Урок 9.4.4:** ПРАКТИКА: Анализ и предложения по улучшению реальной ML системы
+
+---
+
+## МОДУЛЬ 10: CAPSTONE PROJECT: END-TO-END AUTONOMOUS SYSTEM
+
+### Тема 10.1: Планирование и проектирование
+- **Урок 10.1.1:** Выбор проекта, формулировка требований
+- **Урок 10.1.2:** System design документация, архитектура
+- **Урок 10.1.3:** Планирование разработки, milestones
+- **Урок 10.1.4:** ПРАКТИКА: Создание design doc для выбранного проекта
+
+### Тема 10.2: Реализация core функциональности
+- **Урок 10.2.1:** Data collection, preprocessing pipelines
+- **Урок 10.2.2:** Model development, experimentation
+- **Урок 10.2.3:** Integration, API development
+- **Урок 10.2.4:** ПРАКТИКА: Реализация основной ML функциональности
+
+### Тема 10.3: Деплой и мониторинг
+- **Урок 10.3.1:** CI/CD для ML, automated testing
+- **Урок 10.3.2:** Production deployment, canary releases
+- **Урок 10.3.3:** Monitoring, alerting, maintenance
+- **Урок 10.3.4:** ПРАКТИКА: Деплой системы в production-like среду
+
+### Тема 10.4: Документация и презентация
+- **Урок 10.4.1:** Technical documentation, README, API docs
+- **Урок 10.4.2:** Создание демо, скринкасты, примеры использования
+- **Урок 10.4.3:** Подготовка презентации для stakeholders
+- **Урок 10.4.4:** ПРАКТИКА: Финальная презентация проекта
+
+---
+
+## МОДУЛЬ 11: CAREER & INTERVIEW PREPARATION
+
+### Тема 11.1: Подготовка резюме и портфолио
+- **Урок 11.1.1:** Создание ATS-friendly резюме для ML инженера
+- **Урок 11.1.2:** GitHub портфолио: структура, README, projects
+- **Урок 11.1.3:** LinkedIn профиль, personal branding
+- **Урок 11.1.4:** ПРАКТИКА: Создание полного пакета документов для поиска работы
+
+### Тема 11.2: Технические собеседования
+- **Урок 11.2.1:** ML theory: разбор типичных вопросов
+- **Урок 11.2.2:** Coding interviews: Leetcode patterns для ML
+- **Урок 11.2.3:** System design интервью: подходы и frameworks
+- **Урок 11.2.4:** ПРАКТИКА: Mock technical интервью
+
+### Тема 11.3: Поведенческие интервью и переговоры
+- **Урок 11.3.1:** STAR метод, поведенческие вопросы для ML
+- **Урок 11.3.2:** Переговоры по офферу: salary, equity, benefits
+- **Урок 11.3.3:** Выбор между компаниями: стартапы vs корпорации
+- **Урок 11.3.4:** ПРАКТИКА: Mock behavioral интервью и переговоры
+
+---
+
+## Итоговая статистика курса
+
+| Метрика | Количество |
 |---|---|
-| Modules | 11 |
-| Topics | 40 |
-| Total Lessons | 160 |
-| Theory Lessons | 120 |
-| Practice Projects | 40 |
-| Homework Assignments | 120 |
+| Модулей | 11 |
+| Тем | 40 |
+| Всего уроков | 160 |
+| Теоретических уроков | 120 |
+| Практических проектов | 40 |
+| Домашних заданий | 120 |
 
-### Upon completion, each student will have:
-- 40 completed projects in their portfolio
-- 120 completed homework assignments
-- Full understanding of the entire ML technology stack
-- Experience working with real production systems
-- Readiness for interviews at any ML company
+### Каждый студент закончит курс с:
+- 40 завершенными проектами в портфолио
+- 120 выполненными домашними заданиями
+- Полным пониманием всего стека ML технологий
+- Опытом работы с реальными production системами
+- Готовностью к собеседованиям в любую ML компанию
