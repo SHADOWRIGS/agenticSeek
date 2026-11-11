@@ -2,14 +2,16 @@ import unittest
 from unittest.mock import patch, MagicMock
 import os, sys
 import socket
-import subprocess
-from urllib.parse import urlparse
-import platform
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))  # Add project root to Python path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from sources.llm_provider import Provider
+try:
+    from sources.llm_provider import Provider
+    _HAS_DEPS = True
+except ImportError:
+    _HAS_DEPS = False
 
+@unittest.skipUnless(_HAS_DEPS, "httpx/torch not installed")
 class TestIsIpOnline(unittest.TestCase):
     def setUp(self):
         self.checker = Provider("ollama", "deepseek-r1:32b")

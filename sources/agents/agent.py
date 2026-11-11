@@ -8,7 +8,6 @@ import time
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 
-from sources.memory import Memory
 from sources.utility import pretty_print
 from sources.schemas import executorResult
 
@@ -227,7 +226,7 @@ class Agent():
         """
         Remove all code/query blocks within a tag from the answer text.
         """
-        tag = f'```'
+        tag = '```'
         lines = text.split('\n')
         post_lines = []
         in_block = False

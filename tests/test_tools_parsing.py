@@ -1,6 +1,7 @@
 import unittest
 import os
 import sys
+import tempfile
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from sources.tools.tools import Tools
@@ -13,16 +14,19 @@ class TestToolsParsing(unittest.TestCase):
 
     def setUp(self):
         """Set up test fixtures before each test method."""
+        self._tmpdir = tempfile.mkdtemp()
+        os.environ['WORK_DIR'] = self._tmpdir
+
         class TestTool(Tools):
             def execute(self, blocks, safety=False):
                 return "test execution"
-            
+
             def execution_failure_check(self, output):
                 return False
-            
+
             def interpreter_feedback(self, output):
                 return "test feedback"
-        
+
         self.tool = TestTool()
         self.tool.tag = "python"  # Set tag for testing
 

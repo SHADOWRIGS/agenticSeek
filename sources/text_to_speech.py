@@ -3,7 +3,6 @@ import re
 import platform
 import subprocess
 from sys import modules
-from typing import List, Tuple, Type, Dict
 
 IMPORT_FOUND = True
 try:
@@ -15,9 +14,9 @@ except ImportError:
     IMPORT_FOUND = False
 
 if __name__ == "__main__":
-    from utility import pretty_print, animate_thinking
+    from utility import pretty_print
 else:
-    from sources.utility import pretty_print, animate_thinking
+    from sources.utility import pretty_print
 
 class Speech():
     """

@@ -1,8 +1,8 @@
-import platform, os
+import platform
 import asyncio
 
 from sources.utility import pretty_print, animate_thinking
-from sources.agents.agent import Agent, executorResult
+from sources.agents.agent import Agent
 from sources.tools.C_Interpreter import CInterpreter
 from sources.tools.GoInterpreter import GoInterpreter
 from sources.tools.PyInterpreter import PyInterpreter

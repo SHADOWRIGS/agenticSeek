@@ -4,30 +4,27 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, WebDriverException
+from selenium.common.exceptions import TimeoutException, WebDriverException, ElementClickInterceptedException
 from selenium.webdriver.common.action_chains import ActionChains
-from typing import List, Tuple, Type, Dict
+from typing import List
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
-from fake_useragent import UserAgent
 from selenium_stealth import stealth
 import undetected_chromedriver as uc
 import chromedriver_autoinstaller
-import certifi
 import ssl
 import time
 import random
 import os
 import shutil
 import uuid
-import tempfile
 import markdownify
 import sys
 import re
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from sources.utility import pretty_print, animate_thinking
+from sources.utility import pretty_print
 from sources.logger import Logger
 
 
@@ -63,7 +60,7 @@ def get_chrome_path() -> str:
     path = input("Google Chrome not found. Please enter the path to the Chrome executable: ")
     if os.path.exists(path) and os.access(path, os.X_OK):
         os.environ["CHROME_EXECUTABLE_PATH"] = path
-        print(f"Chrome path saved to environment variable CHROME_EXECUTABLE_PATH")
+        print("Chrome path saved to environment variable CHROME_EXECUTABLE_PATH")
         return path
     return None
 
@@ -266,7 +263,7 @@ class Browser:
         try:
             self.driver.get("https://www.google.com")
         except Exception as e:
-            self.logger.log(f"Failed to setup initial tab:" + str(e))
+            self.logger.log("Failed to setup initial tab:" + str(e))
             pass
         self.screenshot()
     
@@ -279,7 +276,7 @@ class Browser:
         try:
             self.driver.get(self.anticaptcha)
         except Exception as e:
-            self.logger.log(f"Failed to setup initial tab:" + str(e))
+            self.logger.log("Failed to setup initial tab:" + str(e))
             pass
 
     def human_move(element):
@@ -442,7 +439,7 @@ class Browser:
             if not element.is_enabled():
                 return False
             try:
-                self.logger.error(f"Scrolling to element for click_element.")
+                self.logger.error("Scrolling to element for click_element.")
                 self.driver.execute_script("arguments[0].scrollIntoView({block: 'center', behavior: 'smooth'});", element)
                 time.sleep(0.1)
                 element.click()
@@ -452,7 +449,7 @@ class Browser:
                 self.logger.error(f"Error click_element: {str(e)}")
                 return False
         except TimeoutException:
-            self.logger.warning(f"Timeout clicking element.")
+            self.logger.warning("Timeout clicking element.")
             return False
         except Exception as e:
             self.logger.error(f"Unexpected error clicking element at {xpath}: {str(e)}")
@@ -738,7 +735,7 @@ class Browser:
             self.logger.error(f"Error taking full page screenshot: {str(e)}")
             return False
         finally:
-            self.driver.execute_script(f"document.body.style.zoom='1'")
+            self.driver.execute_script("document.body.style.zoom='1'")
         return True
 
     def apply_web_safety(self):

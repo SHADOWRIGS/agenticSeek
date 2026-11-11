@@ -1,5 +1,4 @@
-import readline
-from typing import List, Tuple, Type, Dict
+from typing import List, Dict
 
 from sources.text_to_speech import Speech
 from sources.utility import pretty_print, animate_thinking

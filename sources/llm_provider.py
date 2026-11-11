@@ -387,7 +387,6 @@ class Provider:
             if "LM Studio" in str(e):
                 raise  # Re-raise our custom exceptions
             raise Exception(f"Unexpected error: {str(e)}") from e
-        return thought
 
     def openrouter_fn(self, history, verbose=False):
         """
@@ -436,13 +435,13 @@ class Provider:
                 if chunk['type'] == 'text':
                     thought += chunk['content']
             return thought
-        except AuthenticationError:
+        except AuthenticationError as e:
             raise AuthenticationError("Authentication failed. Please check your token.") from e
-        except RateLimitError:
+        except RateLimitError as e:
             raise RateLimitError("Rate limit exceeded. Please wait before making more requests.") from e
         except CloudflareError as e:
             raise CloudflareError(f"Cloudflare protection encountered: {str(e)}") from e
-        except NetworkError:
+        except NetworkError as e:
             raise NetworkError("Network error occurred. Check your internet connection.") from e
         except APIError as e:
             raise APIError(f"API error occurred: {str(e)}") from e

@@ -1,9 +1,15 @@
 import unittest
 import os
 import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))  # Add project root to Python path
-from sources.agents.browser_agent import BrowserAgent
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+try:
+    from sources.agents.browser_agent import BrowserAgent
+    _HAS_DEPS = True
+except ImportError:
+    _HAS_DEPS = False
+
+@unittest.skipUnless(_HAS_DEPS, "torch/selenium not installed")
 class TestBrowserAgentParsing(unittest.TestCase):
     def setUp(self):
         # Initialize a basic BrowserAgent instance for testing

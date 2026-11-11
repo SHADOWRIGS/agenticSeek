@@ -1,15 +1,13 @@
-import time
 import datetime
 import uuid
 import os
 import sys
 import json
-from typing import List, Tuple, Type, Dict
 import torch
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import configparser
 
-from sources.utility import timer_decorator, pretty_print, animate_thinking
+from sources.utility import pretty_print, animate_thinking
 from sources.logger import Logger
 
 config = configparser.ConfigParser()
@@ -29,7 +27,7 @@ class Memory():
         self.logger = Logger("memory.log")
         self.session_time = datetime.datetime.now()
         self.session_id = str(uuid.uuid4())
-        self.conversation_folder = f"conversations/"
+        self.conversation_folder = "conversations/"
         self.session_recovered = False
         if recover_last_session:
             self.load_memory()

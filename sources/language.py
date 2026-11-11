@@ -1,5 +1,4 @@
-from typing import List, Tuple, Type, Dict
-import re
+from typing import List
 import langid
 from transformers import MarianMTModel, MarianTokenizer
 

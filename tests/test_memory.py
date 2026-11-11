@@ -1,12 +1,18 @@
 import unittest
 import os
 import sys
-import json
+import importlib
 import datetime
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))  # Add project root to Python path
-from sources.memory import Memory
 
+_torch_available = importlib.util.find_spec("torch") is not None
+
+if _torch_available:
+    from sources.memory import Memory
+
+
+@unittest.skipUnless(_torch_available, "torch is not installed")
 class TestMemory(unittest.TestCase):
     def setUp(self):
         self.system_prompt = "Test system prompt"

@@ -1,5 +1,5 @@
 import json
-from typing import List, Tuple, Type, Dict
+from typing import List, Tuple
 from sources.utility import pretty_print, animate_thinking
 from sources.agents.agent import Agent
 from sources.agents.code_agent import CoderAgent
@@ -161,7 +161,7 @@ class PlannerAgent(Agent):
             agents_tasks = self.parse_agent_tasks(answer)
             if agents_tasks == []:
                 self.show_plan(agents_tasks, answer)
-                prompt = f"Failed to parse the tasks. Please write down your task followed by a json plan within ```json. Do not ask for clarification.\n"
+                prompt = "Failed to parse the tasks. Please write down your task followed by a json plan within ```json. Do not ask for clarification.\n"
                 pretty_print("Failed to make plan. Retrying...", color="warning")
                 continue
             self.show_plan(agents_tasks, answer)
@@ -282,7 +282,7 @@ class PlannerAgent(Agent):
             except Exception as e:
                 raise e
             if self.stop:
-                pretty_print(f"Requested stop.", color="failure")
+                pretty_print("Requested stop.", color="failure")
             agents_work_result[task['id']] = answer
             agents_tasks = await self.update_plan(goal, agents_tasks, agents_work_result, task['id'], success)
             steps = len(agents_tasks)

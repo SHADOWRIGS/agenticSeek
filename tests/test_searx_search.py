@@ -4,7 +4,6 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))  # Add project root to Python path
 from sources.tools.searxSearch import searxSearch
 from dotenv import load_dotenv
-import requests  # Import the requests module
 
 load_dotenv()
 
@@ -34,6 +33,7 @@ class TestSearxSearch(unittest.TestCase):
         # Restore the environment variable after the test
         os.environ['SEARXNG_BASE_URL'] = "http://searx.lan"
 
+    @unittest.skipUnless(os.getenv("SEARXNG_LIVE"), "requires running SearxNG instance")
     def test_execute_valid_query(self):
         # Execute the search and verify the result
         result = self.search_tool.execute([self.valid_query])
@@ -53,6 +53,7 @@ class TestSearxSearch(unittest.TestCase):
         print(f"Output from test_execute_no_query: {result}")
         self.assertEqual(result, "Error: No search query provided.")
 
+    @unittest.skipUnless(os.getenv("SEARXNG_LIVE"), "requires running SearxNG instance")
     def test_execute_request_exception(self):
         # Test a request exception by temporarily modifying the base_url to an invalid one
         original_base_url = self.search_tool.base_url
@@ -64,6 +65,7 @@ class TestSearxSearch(unittest.TestCase):
         finally:
             self.search_tool.base_url = original_base_url  # Restore the original base_url
 
+    @unittest.skipUnless(os.getenv("SEARXNG_LIVE"), "requires running SearxNG instance")
     def test_execute_no_results(self):
         # Execute the search and verify that an empty string is handled correctly
         result = self.search_tool.execute(["nonexistent query that should return no results"])

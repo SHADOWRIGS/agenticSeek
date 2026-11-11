@@ -1,6 +1,5 @@
-import asyncio
 
-from sources.utility import pretty_print, animate_thinking
+from sources.utility import animate_thinking
 from sources.agents.agent import Agent
 from sources.tools.fileFinder import FileFinder
 from sources.tools.BashInterpreter import BashInterpreter

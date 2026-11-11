@@ -6,7 +6,7 @@ import dotenv
 dotenv.load_dotenv()
 
 from sources.tools.tools import Tools
-from sources.utility import animate_thinking, pretty_print
+from sources.utility import pretty_print
 
 """
 WARNING

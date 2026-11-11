@@ -1,5 +1,4 @@
 from colorama import Fore
-from typing import List, Tuple, Type, Dict
 import queue
 import threading
 import numpy as np
@@ -195,11 +194,11 @@ class AudioTranscriber:
                 print(Fore.YELLOW + f"Transcribed: {text} in {end_time - start_time} seconds" + Fore.RESET)
                 for language, words in self.trigger_words.items():
                     if any(word in text.lower() for word in words):
-                        print(Fore.GREEN + f"Listening again..." + Fore.RESET)
+                        print(Fore.GREEN + "Listening again..." + Fore.RESET)
                         self.recorded = text
                 for language, words in self.confirmation_words.items():
                     if any(word in text.lower() for word in words):
-                        print(Fore.GREEN + f"Trigger detected. Sending to AI..." + Fore.RESET)
+                        print(Fore.GREEN + "Trigger detected. Sending to AI..." + Fore.RESET)
                         audio_queue.task_done()
                         done = True
                         break

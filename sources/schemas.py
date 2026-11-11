@@ -1,5 +1,4 @@
 
-from typing import Tuple, Callable
 from pydantic import BaseModel
 from sources.utility import pretty_print
 

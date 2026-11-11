@@ -1,14 +1,11 @@
 import re
-import time
 from datetime import date
-from typing import List, Tuple, Type, Dict
+from typing import List, Tuple
 from enum import Enum
-import asyncio
 
 from sources.utility import pretty_print, animate_thinking
 from sources.agents.agent import Agent
 from sources.tools.searxSearch import searxSearch
-from sources.browser import Browser
 from sources.logger import Logger
 from sources.memory import Memory
 
@@ -305,7 +302,7 @@ class BrowserAgent(Agent):
         If you were previously on a login form, no need to take notes.
         """
         if not fill_success:
-            prompt += f"""
+            prompt += """
             According to browser feedback, the form was not filled correctly. Is that so? you might consider other strategies.
             """
         return prompt
@@ -341,13 +338,13 @@ class BrowserAgent(Agent):
         """
         complete = False
 
-        animate_thinking(f"Thinking...", color="status")
+        animate_thinking("Thinking...", color="status")
         mem_begin_idx = self.memory.push('user', self.search_prompt(user_prompt))
         ai_prompt, reasoning = await self.llm_request()
         if Action.REQUEST_EXIT.value in ai_prompt:
             pretty_print(f"Web agent requested exit.\n{reasoning}\n\n{ai_prompt}", color="failure")
             return ai_prompt, "" 
-        animate_thinking(f"Searching...", color="status")
+        animate_thinking("Searching...", color="status")
         self.status_message = "Searching..."
         search_result_raw = self.tools["web_search"].execute([ai_prompt], False)
         search_result = self.jsonify_search_results(search_result_raw)[:16]
@@ -359,7 +356,7 @@ class BrowserAgent(Agent):
             unvisited = self.select_unvisited(search_result)
             answer, reasoning = await self.llm_decide(prompt, show_reasoning = False)
             if self.stop:
-                pretty_print(f"Requested stop.", color="failure")
+                pretty_print("Requested stop.", color="failure")
                 break
             if self.last_answer == answer:
                 prompt = self.stuck_prompt(user_prompt, unvisited)
@@ -370,14 +367,14 @@ class BrowserAgent(Agent):
             extracted_form = self.extract_form(answer)
             if len(extracted_form) > 0:
                 self.status_message = "Filling web form..."
-                pretty_print(f"Filling inputs form...", color="status")
+                pretty_print("Filling inputs form...", color="status")
                 fill_success = self.browser.fill_form(extracted_form)
                 page_text = self.get_page_text(limit_to_model_ctx=True)
                 answer = self.handle_update_prompt(user_prompt, page_text, fill_success)
                 answer, reasoning = await self.llm_decide(prompt)
 
             if Action.FORM_FILLED.value in answer:
-                pretty_print(f"Filled form. Handling page update.", color="status")
+                pretty_print("Filled form. Handling page update.", color="status")
                 page_text = self.get_page_text(limit_to_model_ctx=True)
                 self.navigable_links = self.browser.get_navigable()
                 prompt = self.make_navigation_prompt(user_prompt, page_text)
@@ -393,7 +390,7 @@ class BrowserAgent(Agent):
 
             if Action.REQUEST_EXIT.value in answer:
                 self.status_message = "Exiting web browser..."
-                pretty_print(f"Agent requested exit.", color="status")
+                pretty_print("Agent requested exit.", color="status")
                 complete = True
                 break
 

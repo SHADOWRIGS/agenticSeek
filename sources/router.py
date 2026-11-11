@@ -2,7 +2,7 @@ import os
 import sys
 import torch
 import random
-from typing import List, Tuple, Type, Dict
+from typing import List, Type, Dict
 
 from transformers import pipeline
 from adaptive_classifier import AdaptiveClassifier
@@ -13,7 +13,7 @@ from sources.agents.casual_agent import CasualAgent
 from sources.agents.planner_agent import FileAgent
 from sources.agents.browser_agent import BrowserAgent
 from sources.language import LanguageUtility
-from sources.utility import pretty_print, animate_thinking, timer_decorator
+from sources.utility import pretty_print, animate_thinking
 from sources.logger import Logger
 
 class AgentRouter:
@@ -422,7 +422,7 @@ class AgentRouter:
             return "HIGH"
         elif complexity == "LOW":
             return "LOW"
-        pretty_print(f"Failed to estimate the complexity of the text.", color="failure")
+        pretty_print("Failed to estimate the complexity of the text.", color="failure")
         return "LOW"
     
     def find_planner_agent(self) -> Agent:
@@ -434,7 +434,7 @@ class AgentRouter:
         for agent in self.agents:
             if agent.type == "planner_agent":
                 return agent
-        pretty_print(f"Error finding planner agent. Please add a planner agent to the list of agents.", color="failure")
+        pretty_print("Error finding planner agent. Please add a planner agent to the list of agents.", color="failure")
         self.logger.error("Planner agent not found.")
         return None
     
@@ -455,7 +455,7 @@ class AgentRouter:
         labels = [agent.role for agent in self.agents]
         complexity = self.estimate_complexity(text)
         if complexity == "HIGH":
-            pretty_print(f"Complex task detected, routing to planner agent.", color="info")
+            pretty_print("Complex task detected, routing to planner agent.", color="info")
             return self.find_planner_agent()
         try:
             best_agent = self.router_vote(text, labels, log_confidence=False)
@@ -466,7 +466,7 @@ class AgentRouter:
                 role_name = agent.role
                 pretty_print(f"Selected agent: {agent.agent_name} (roles: {role_name})", color="warning")
                 return agent
-        pretty_print(f"Error choosing agent.", color="failure")
+        pretty_print("Error choosing agent.", color="failure")
         self.logger.error("No agent selected.")
         return None
 

@@ -1,7 +1,6 @@
 import os, sys
 import stat
 import mimetypes
-import configparser
 
 if __name__ == "__main__": # if running as a script for individual testing
     sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))

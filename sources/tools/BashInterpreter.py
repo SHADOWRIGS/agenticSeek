@@ -1,7 +1,6 @@
 
 import os, sys
 import re
-from io import StringIO
 import subprocess
 
 if __name__ == "__main__": # if running as a script for individual testing
