@@ -1,0 +1,14 @@
+# Образец: расписание для nightly-retrain.service.
+[Unit]
+Description=Run nightly model retraining at 02:30
+
+[Timer]
+OnCalendar=*-*-* 02:30:00
+# Если в 02:30 сервер был выключен, запуск произойдёт сразу после включения.
+Persistent=true
+# Случайная задержка до 5 минут, чтобы задачи разных таймеров не стартовали в одну секунду.
+RandomizedDelaySec=5min
+Unit=nightly-retrain.service
+
+[Install]
+WantedBy=timers.target
