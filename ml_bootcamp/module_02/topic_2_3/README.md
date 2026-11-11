@@ -5,7 +5,7 @@
 
 | Урок | Название | Тип | Статус |
 |---|---|---|---|
-| 2.3.1 | Создание features для временных рядов | теория | в разработке |
-| 2.3.2 | Target encoding, mean encoding, likelihood encoding | теория | в разработке |
-| 2.3.3 | Автоматический feature engineering с FeatureTools | теория | в разработке |
-| 2.3.4 | ПРАКТИКА: Feature engineering для Kaggle конкурса | практика | в разработке |
+| 2.3.1 | [Создание features для временных рядов](lesson_2_3_1.md) | теория | готов |
+| 2.3.2 | [Target encoding, mean encoding, likelihood encoding](lesson_2_3_2.md) | теория | готов |
+| 2.3.3 | [Автоматический feature engineering с FeatureTools](lesson_2_3_3.md) | теория | готов |
+| 2.3.4 | [ПРАКТИКА: Feature engineering для Kaggle конкурса](lesson_2_3_4.md) | практика | готов |

@@ -8,6 +8,7 @@ from pathlib import Path
 COURSE_DIR = Path(__file__).resolve().parent.parent
 PLAN_PATH = COURSE_DIR.parent / "docs" / "ML_BOOTCAMP_COURSE_PLAN.md"
 GENERATED_NOTE = "<!-- Файл сгенерирован tools/build_index.py, вручную не редактировать -->"
+DRAFT_MARKER = ".draft"
 
 ABOUT = [
     "## Как устроены материалы",
@@ -82,11 +83,16 @@ def parse_plan(text: str) -> list[Module]:
     return modules
 
 
+def is_draft(topic_dir: Path) -> bool:
+    """Тема с файлом .draft ещё не прошла проверку: её уроки не считаются готовыми."""
+    return (topic_dir / DRAFT_MARKER).exists()
+
+
 def lesson_row(lesson: Lesson, topic_dir: Path, link_prefix: str) -> str:
     kind = "практика" if lesson.is_practice else "теория"
     if (topic_dir / lesson.filename).exists():
         title = f"[{lesson.title}]({link_prefix}{lesson.filename})"
-        status = "готов"
+        status = "черновик, на проверке" if is_draft(topic_dir) else "готов"
     else:
         title = lesson.title
         status = "в разработке"
@@ -101,7 +107,12 @@ def lessons_table(topic: Topic, topic_dir: Path, link_prefix: str) -> list[str]:
 
 def count_ready(topics: list[Topic], module_dir: Path) -> tuple[int, int]:
     total = sum(len(t.lessons) for t in topics)
-    ready = sum((module_dir / t.dirname / lesson.filename).exists() for t in topics for lesson in t.lessons)
+    ready = sum(
+        (module_dir / t.dirname / lesson.filename).exists()
+        for t in topics
+        if not is_draft(module_dir / t.dirname)
+        for lesson in t.lessons
+    )
     return ready, total
 
 

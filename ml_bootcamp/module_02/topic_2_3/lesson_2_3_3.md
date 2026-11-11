@@ -308,7 +308,9 @@ selected, kept = ft.selection.remove_low_information_features(matrix_2, definiti
 selected, kept = ft.selection.remove_highly_null_features(selected, kept)
 selected, kept = ft.selection.remove_single_value_features(selected, kept)
 selected, kept = ft.selection.remove_highly_correlated_features(selected, kept)
-test_selected = ft.calculate_feature_matrix(kept, entityset=es, cutoff_time=test_labels, cutoff_time_in_index=True)
+test_selected = ft.calculate_feature_matrix(
+    kept, entityset=es, cutoff_time=test_labels, cutoff_time_in_index=True
+)
 x_selected, _ = to_xy(selected)
 x_test_selected, _ = to_xy(test_selected)
 x_selected.shape[1], test_auc(x_selected, y_train, x_test_selected, y_test)      # (195, 0.92)

@@ -387,13 +387,13 @@ importance.sort_values("mean", ascending=False).head(6).round(4)
 ```
 
 ```
-                       mean     std
-mean_28              0.1440  0.0033
-promo                0.0553  0.0015
-day_of_week          0.0314  0.0017
-mean_7               0.0234  0.0015
-product              0.0169  0.0009
-mean_56              0.0141  0.0008
+               mean     std
+mean_28      0.1440  0.0033
+promo        0.0553  0.0015
+day_of_week  0.0314  0.0017
+mean_7       0.0234  0.0015
+product      0.0169  0.0009
+mean_56      0.0141  0.0008
 ```
 
 Число в столбце `mean` — на сколько вырастает WAPE при перемешивании признака. У 14 признаков из 27 прирост

@@ -52,7 +52,8 @@ sets = {
 print(compare_feature_sets(features, sets, "churn", baseline="числа"))
 
 scores = evaluate_features(features, sets["+ город"], "churn")
-log_experiment(Path("experiments/journal.jsonl"), "+ город", sets["+ город"], scores, note="target encoding города")
+journal = Path("experiments/journal.jsonl")
+log_experiment(journal, "+ город", sets["+ город"], scores, note="target encoding города")
 ```
 
 На демо-данных и эталонной реализации этот пример печатает:
