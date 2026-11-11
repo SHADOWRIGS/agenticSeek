@@ -54,9 +54,9 @@ def _make_items(rng: np.random.Generator, n_items: int, centers: np.ndarray):
     kind = rng.integers(0, 5, n_items)
     brand = cat * 4 + rng.integers(0, 4, n_items)  # у каждой категории четыре своих бренда
 
-    kind_shift = rng.normal(0, 0.5, (len(categories), 5, N_FACTORS))
+    kind_shift = rng.normal(0, 0.6, (len(categories), 5, N_FACTORS))
     brand_shift = rng.normal(0, 0.4, (len(BRANDS), N_FACTORS))
-    factors = centers[cat] + kind_shift[cat, kind] + brand_shift[brand] + rng.normal(0, 0.5, (n_items, N_FACTORS))
+    factors = centers[cat] + kind_shift[cat, kind] + brand_shift[brand] + rng.normal(0, 0.7, (n_items, N_FACTORS))
 
     # цена связана с первым скрытым фактором («премиальность»)
     base_price = np.array([CATALOG[c][1] for c in categories])[cat]
@@ -92,7 +92,7 @@ def _make_users(rng: np.random.Generator, n_users: int, centers: np.ndarray):
     for u in range(n_users):
         liked = rng.choice(n_categories, size=rng.integers(1, 4), replace=False)
         weights[u, liked] = rng.dirichlet(np.ones(len(liked)))
-    factors = weights @ centers + rng.normal(0, 0.45, (n_users, N_FACTORS))
+    factors = weights @ centers + rng.normal(0, 0.7, (n_users, N_FACTORS))
 
     register_day = np.where(rng.random(n_users) < 0.55, rng.uniform(-365, 0, n_users), rng.uniform(0, N_DAYS, n_users))
     users = pd.DataFrame(
@@ -105,7 +105,7 @@ def _make_users(rng: np.random.Generator, n_users: int, centers: np.ndarray):
 
 
 def make_shop(n_users: int = 3000, n_items: int = 2000, seed: int = 42) -> Shop:
-    """Генерирует магазин: по умолчанию 3 000 пользователей, 2 000 товаров, около 86 тысяч событий.
+    """Генерирует магазин: по умолчанию 3 000 пользователей, 2 000 товаров, около 102 тысяч событий.
 
     Как устроены данные:
 
@@ -122,7 +122,7 @@ def make_shop(n_users: int = 3000, n_items: int = 2000, seed: int = 42) -> Shop:
       выходят уже в течение периода; новые товары первые две недели показываются втрое чаще.
     """
     rng = np.random.default_rng(seed)
-    centers = rng.normal(0, 1.0, (len(CATALOG), N_FACTORS))
+    centers = rng.normal(0, 0.8, (len(CATALOG), N_FACTORS))
     items, item_factors, release_day = _make_items(rng, n_items, centers)
     users, user_factors, register_day = _make_users(rng, n_users, centers)
 
@@ -147,7 +147,7 @@ def make_shop(n_users: int = 3000, n_items: int = 2000, seed: int = 42) -> Shop:
     with np.errstate(divide="ignore"):
         log_exposure = np.log(exposure / window)
     # выбор без возвращения с вероятностями softmax: прибавляем шум Гумбеля и берём наибольшие
-    taste_score = 1.6 * affinity + popularity + log_exposure + rng.gumbel(size=affinity.shape)
+    taste_score = 2.0 * affinity + popularity + log_exposure + rng.gumbel(size=affinity.shape)
     random_score = popularity + log_exposure + rng.gumbel(size=affinity.shape)
     rank = np.arange(n_items)[None, :]
     taste_order = np.argsort(-taste_score, axis=1)
