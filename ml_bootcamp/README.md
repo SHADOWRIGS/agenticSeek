@@ -5,9 +5,9 @@
 
 | Модуль | Название | Готово уроков |
 |---|---|---|
-| 1 | [FOUNDATIONS & MINDSET ENGINEER](module_01/README.md) | 15 / 16 |
+| 1 | [FOUNDATIONS & MINDSET ENGINEER](module_01/README.md) | 16 / 16 |
 | 2 | [DATA-CENTRIC MACHINE LEARNING](module_02/README.md) | 4 / 16 |
-| 3 | [CLASSICAL ML: ALGORITHMS & PRODUCTION THINKING](module_03/README.md) | 0 / 16 |
+| 3 | [CLASSICAL ML: ALGORITHMS & PRODUCTION THINKING](module_03/README.md) | 1 / 16 |
 | 4 | [ENSEMBLE MASTERY & HYPERPARAMETER OPTIMIZATION](module_04/README.md) | 0 / 16 |
 | 5 | [DEEP LEARNING & MODERN ARCHITECTURES](module_05/README.md) | 0 / 16 |
 | 6 | [LOW-LEVEL ML & PERFORMANCE OPTIMIZATION](module_06/README.md) | 0 / 16 |
@@ -17,6 +17,15 @@
 | 10 | [CAPSTONE PROJECT: END-TO-END AUTONOMOUS SYSTEM](module_10/README.md) | 0 / 16 |
 | 11 | [CAREER & INTERVIEW PREPARATION](module_11/README.md) | 0 / 12 |
 
-Всего готово: 19 из 172 уроков.
+Всего готово: 21 из 172 уроков.
 
-Обновить оглавление: `python3 ml_bootcamp/tools/build_index.py`
+## Как устроены материалы
+
+- `module_XX/topic_X_Y/lesson_X_Y_Z.md` — урок: цели, теория с проверенными примерами, типичные ошибки,
+  контрольные вопросы и домашнее задание с критериями приёмки.
+- Четвёртый урок каждой темы — практический проект. Его стартовые материалы лежат в `topic_X_Y/practice/`:
+  заготовки кода и тесты, описывающие ожидаемое поведение. Эталонных решений в репозитории нет.
+- Код уроков рассчитан на Python 3.12 и окружение из урока 1.1.1 (`uv`, Ruff).
+
+Оглавления (`README.md` в папках курса, модулей и тем) создаются автоматически.
+После добавления урока обновите их: `python3 ml_bootcamp/tools/build_index.py`

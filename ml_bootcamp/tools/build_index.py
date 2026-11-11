@@ -9,6 +9,19 @@ COURSE_DIR = Path(__file__).resolve().parent.parent
 PLAN_PATH = COURSE_DIR.parent / "docs" / "ML_BOOTCAMP_COURSE_PLAN.md"
 GENERATED_NOTE = "<!-- Файл сгенерирован tools/build_index.py, вручную не редактировать -->"
 
+ABOUT = [
+    "## Как устроены материалы",
+    "",
+    "- `module_XX/topic_X_Y/lesson_X_Y_Z.md` — урок: цели, теория с проверенными примерами, типичные ошибки,",
+    "  контрольные вопросы и домашнее задание с критериями приёмки.",
+    "- Четвёртый урок каждой темы — практический проект. Его стартовые материалы лежат в `topic_X_Y/practice/`:",
+    "  заготовки кода и тесты, описывающие ожидаемое поведение. Эталонных решений в репозитории нет.",
+    "- Код уроков рассчитан на Python 3.12 и окружение из урока 1.1.1 (`uv`, Ruff).",
+    "",
+    "Оглавления (`README.md` в папках курса, модулей и тем) создаются автоматически.",
+    "После добавления урока обновите их: `python3 ml_bootcamp/tools/build_index.py`",
+]
+
 MODULE_RE = re.compile(r"^## МОДУЛЬ (\d+): (.+)$")
 TOPIC_RE = re.compile(r"^### Тема (\d+)\.(\d+): (.+)$")
 LESSON_RE = re.compile(r"^- \*\*Урок (\d+)\.(\d+)\.(\d+):\*\* (.+)$")
@@ -126,7 +139,7 @@ def build(modules: list[Module]) -> None:
     counts = [count_ready(m.topics, COURSE_DIR / m.dirname) for m in modules]
     all_ready = sum(ready for ready, _ in counts)
     total = sum(module_total for _, module_total in counts)
-    root += ["", f"Всего готово: {all_ready} из {total} уроков.", "", "Обновить оглавление: `python3 ml_bootcamp/tools/build_index.py`"]
+    root += ["", f"Всего готово: {all_ready} из {total} уроков.", "", *ABOUT]
     write(COURSE_DIR / "README.md", root)
     print(f"Модулей: {len(modules)}, тем: {sum(len(m.topics) for m in modules)}, уроков: {total}, готово: {all_ready}")
 
