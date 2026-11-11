@@ -35,7 +35,7 @@
 import numpy as np
 from flats_data import FEATURES, TARGET, make_flats
 
-flats = make_flats()                    # 200 квартир: area, rooms, age, distance, price
+flats = make_flats()  # 200 квартир: area, rooms, age, distance, price
 X = flats[FEATURES].to_numpy()
 y = flats[TARGET].to_numpy()
 ```
@@ -74,10 +74,10 @@ $$\nabla L(w) = -\frac{2}{n} X^\top (y - Xw)$$
 $$X^\top X\, w = X^\top y \quad\Rightarrow\quad w = (X^\top X)^{-1} X^\top y$$
 
 ```python
-Xb = np.column_stack([np.ones(len(X)), X])          # столбец единиц для свободного члена
+Xb = np.column_stack([np.ones(len(X)), X])  # столбец единиц для свободного члена
 
-w_inv = np.linalg.inv(Xb.T @ Xb) @ Xb.T @ y         # формула «в лоб» — так делать не надо
-w, *_ = np.linalg.lstsq(Xb, y, rcond=None)          # правильный способ
+w_inv = np.linalg.inv(Xb.T @ Xb) @ Xb.T @ y  # формула «в лоб» — так делать не надо
+w, *_ = np.linalg.lstsq(Xb, y, rcond=None)  # правильный способ
 w.round(3)
 # array([ 1.797,  0.108,  0.403, -0.042, -0.147])
 ```
@@ -349,7 +349,7 @@ Lasso из группы сильно коррелирующих признако
 ```python
 from sklearn.linear_model import ElasticNet
 
-ElasticNet(alpha=0.1, l1_ratio=0.5)      # l1_ratio=1 — чистый Lasso, l1_ratio=0 — чистый Ridge
+ElasticNet(alpha=0.1, l1_ratio=0.5)  # l1_ratio=1 — чистый Lasso, l1_ratio=0 — чистый Ridge
 ```
 
 | | Ridge (L2) | Lasso (L1) | ElasticNet |
@@ -388,8 +388,8 @@ model.fit(X_train, y_train)
 ```python
 from sklearn.linear_model import LassoCV, RidgeCV
 
-ridge = RidgeCV(alphas=np.logspace(-3, 3, 25)).fit(X_train, y_train)     # ridge.alpha_ — лучшее значение
-lasso = LassoCV(cv=5, random_state=0).fit(X_train, y_train)              # lasso.alpha_
+ridge = RidgeCV(alphas=np.logspace(-3, 3, 25)).fit(X_train, y_train)  # ridge.alpha_ — лучшее значение
+lasso = LassoCV(cv=5, random_state=0).fit(X_train, y_train)  # lasso.alpha_
 ```
 
 На данных раздела 7 `LassoCV` выбрал α = 0.115 и оставил 19 признаков (R² = 0.948), а не 5. Это типично:

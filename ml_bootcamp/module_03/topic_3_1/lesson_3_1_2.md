@@ -117,9 +117,9 @@ n, k = X.shape
 
 w = np.linalg.lstsq(X, y, rcond=None)[0]
 residuals = y - X @ w
-sigma2 = residuals @ residuals / (n - k)                 # оценка дисперсии шума: 0.8142 в квадрате
+sigma2 = residuals @ residuals / (n - k)  # оценка дисперсии шума: 0.8142 в квадрате
 covariance = sigma2 * np.linalg.inv(X.T @ X)
-standard_errors = np.sqrt(np.diag(covariance))           # [0.2274, 0.0051, 0.1082, 0.0040, 0.0080]
+standard_errors = np.sqrt(np.diag(covariance))  # [0.2274, 0.0051, 0.1082, 0.0040, 0.0080]
 ```
 
 Числа совпадают со столбцом `std err`. Оценка шума 0.814 близка к заложенному в генератор значению 0.8.
@@ -149,13 +149,13 @@ $$t = \frac{\hat{w}_j}{\operatorname{SE}(\hat{w}_j)}$$
 
 ```python
 t_stat = w / standard_errors
-p_values = 2 * stats.t.sf(np.abs(t_stat), df=n - k)      # для rooms: 0.0003
+p_values = 2 * stats.t.sf(np.abs(t_stat), df=n - k)  # для rooms: 0.0003
 ```
 
 **Доверительный интервал** — диапазон правдоподобных значений коэффициента:
 
 ```python
-t_critical = stats.t.ppf(0.975, df=n - k)                # 1.972
+t_critical = stats.t.ppf(0.975, df=n - k)  # 1.972
 lower, upper = w - t_critical * standard_errors, w + t_critical * standard_errors
 # rooms: [0.189, 0.616]
 ```
@@ -337,7 +337,7 @@ rng = np.random.default_rng(0)
 features = flats[["area", "rooms", "age", "distance"]].to_numpy()
 coefficients = []
 for _ in range(2000):
-    idx = rng.integers(0, len(flats), len(flats))                 # выборка с возвращением
+    idx = rng.integers(0, len(flats), len(flats))  # выборка с возвращением
     Xb = np.column_stack([np.ones(len(idx)), features[idx]])
     coefficients.append(np.linalg.lstsq(Xb, y[idx], rcond=None)[0][1:])
 
