@@ -179,7 +179,7 @@ from sklearn.metrics import fbeta_score, precision_recall_curve
 precision, recall, thresholds = precision_recall_curve(y_test, proba)
 f1 = 2 * precision[:-1] * recall[:-1] / np.maximum(precision[:-1] + recall[:-1], 1e-12)
 thresholds[f1.argmax()], f1.max()  # (0.181, 0.346)
-fbeta_score(y_test, proba >= 0.127, beta=2)  # 0.375
+fbeta_score(y_test, proba >= 0.2, beta=2)  # 0.305
 ```
 
 Ограничения F-меры: она не учитывает TN, зависит от порога и от доли класса, а $\beta$ — грубая замена
@@ -367,10 +367,19 @@ y_sorted[:k].mean(), y_sorted[:k].sum() / y_sorted.sum(), y_sorted[:k].mean() / 
 | `micro` | TP, FP и FN суммируются по всем классам | 0.948 | 0.948 | 0.948 |
 
 ```python
+from sklearn.datasets import make_classification
 from sklearn.metrics import classification_report, f1_score
 
-# print(classification_report(y_true, y_pred))  — таблица по классам и все три усреднения
-# f1_score(y_true, y_pred, average="macro")
+X_multi, y_multi = make_classification(
+    n_samples=6000, n_features=8, n_informative=4, n_redundant=0, n_classes=3, n_clusters_per_class=1,
+    weights=[0.85, 0.12, 0.03], class_sep=0.8, flip_y=0.02, random_state=0,
+)  # fmt: skip
+Xm_train, Xm_test, ym_train, ym_test = train_test_split(
+    X_multi, y_multi, test_size=0.5, stratify=y_multi, random_state=0
+)
+ym_pred = LogisticRegression(max_iter=1000).fit(Xm_train, ym_train).predict(Xm_test)
+print(classification_report(ym_test, ym_pred, digits=3))  # таблица по классам и все усреднения
+f1_score(ym_test, ym_pred, average="macro")  # 0.817
 ```
 
 Micro-усреднение в задаче с одним ответом на объект совпадает с accuracy и наследует её недостатки.
