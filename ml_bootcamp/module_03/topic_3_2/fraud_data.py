@@ -30,9 +30,9 @@ def make_transactions(n: int = 60_000, seed: int = 42, include_hidden: bool = Fa
     rng = np.random.default_rng(seed)
     n_clients = max(n // 12, 1)
 
-    # У 3 % клиентов данные карты утекли: мошенники совершают по ней серию операций
-    client_compromised = rng.random(n_clients) < 0.03
-    client_risk = 0.4 * rng.normal(0, 1, n_clients) + 3.0 * client_compromised
+    # У 2.5 % клиентов данные карты утекли: мошенники совершают по ней серию операций
+    client_compromised = rng.random(n_clients) < 0.025
+    client_risk = 0.4 * rng.normal(0, 1, n_clients) + 4.5 * client_compromised
     client_account_age = rng.integers(10, 3000, n_clients)
     client_avg_amount = np.round(np.exp(rng.normal(7.3, 0.5, n_clients)), -1)
 
@@ -54,7 +54,7 @@ def make_transactions(n: int = 60_000, seed: int = 42, include_hidden: bool = Fa
     log_ratio = np.log(amount_ratio)
     account_age = client_account_age[client]
     logit = (
-        -7.5
+        -7.9
         + 0.3 * log_ratio
         + 1.5 * np.maximum(log_ratio, 0)  # крупные для клиента суммы подозрительнее
         + 2.5 * (amount_ratio < 0.15)  # «проверочные» списания на маленькую сумму
