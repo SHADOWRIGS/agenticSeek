@@ -42,12 +42,12 @@
 
 ```
 $ uv add fg-data-profiling
-  ...
-      And because your project depends on pandas>=3 and ydata-profiling, we
-      can conclude that your project's requirements are unsatisfiable.
+  ╰─▶ Because all versions of fg-data-profiling depend on pandas>1.5,<3.0 and
+      your project depends on fg-data-profiling, we can conclude that your
+      project depends on pandas>1.5,<3.0.
+      And because your project depends on pandas>=3, we can conclude that your
+      project's requirements are unsatisfiable.
 ```
-
-(Сообщение приведено для `ydata-profiling`; ограничение `pandas<3.0` у обоих пакетов одинаковое.)
 
 Понижать pandas во всём проекте ради одного инструмента не нужно. Нормальная практика — отдельное
 окружение под инструмент с более старыми зависимостями:
@@ -85,7 +85,7 @@ rng = np.random.default_rng(0)
 
 df = sales.copy()
 df["currency"] = "RUB"                                                       # константа
-df["price_usd"] = (df["price"] / 90).round(2)                                # тот же признак в других единицах
+df["price_usd"] = (df["price"] / 90).round(2)                                # тот же признак в долларах
 df["cashier"] = "K" + pd.Series(rng.integers(1, 301, len(df))).astype(str).str.zfill(3)    # 300 значений
 df["comment"] = pd.Series("уточнить", index=df.index).where(rng.random(len(df)) < 0.03)    # почти пусто
 df = pd.concat([df, df.sample(300, random_state=0)], ignore_index=True)      # 300 строк-дубликатов
@@ -283,7 +283,9 @@ train_report.compare(test_report).to_file("reports/train_vs_test.html")
 ```python
 a, b = train_report.get_description().variables, test_report.get_description().variables
 columns = ["price", "units", "revenue"]
-shift = pd.DataFrame({"train_mean": {c: a[c]["mean"] for c in columns}, "test_mean": {c: b[c]["mean"] for c in columns}})
+shift = pd.DataFrame(
+    {"train_mean": {c: a[c]["mean"] for c in columns}, "test_mean": {c: b[c]["mean"] for c in columns}}
+)
 shift["change"] = shift["test_mean"] / shift["train_mean"] - 1
 ```
 
@@ -381,7 +383,7 @@ ts_report = ProfileReport(
 2. Какие разделы есть в полном отчёте и каких нет при `minimal=True`?
 3. Какие из 17 предупреждений в примере урока указывают на настоящие проблемы, а какие — на устройство
    данных? Как вы это определили?
-4. Почему полный отчёт по 60 столбцам строится в десятки раз дольше, чем по 10? Что отключить в первую очередь?
+4. Почему полный отчёт по 60 столбцам строится в десятки раз дольше, чем по 10? Что отключить первым?
 5. В сравнении train и test продажи в штуках выросли на 27 %. Это сдвиг данных, с которым нужно бороться?
 6. Что останется в HTML-отчёте, если отключить показ строк таблицы? Чем это опасно?
 7. Приведите три вопроса о данных, на которые автоматический отчёт ответить не может.
@@ -416,7 +418,7 @@ ts_report = ProfileReport(
 
 - Репозиторий fg-data-profiling с документацией и примерами:
   https://github.com/Data-Centric-AI-Community/fg-data-profiling
-- Руководство pandas, работа с пропущенными данными: https://pandas.pydata.org/docs/user_guide/missing_data.html
+- Руководство pandas, пропущенные данные: https://pandas.pydata.org/docs/user_guide/missing_data.html
 - Руководство pandas, чтение и запись Parquet: https://pandas.pydata.org/docs/user_guide/io.html#parquet
 
 **Следующий урок:** 2.4.4 — ПРАКТИКА: Создание интерактивного дашборда для EDA.

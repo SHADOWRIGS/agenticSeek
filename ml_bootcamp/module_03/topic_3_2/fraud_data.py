@@ -54,18 +54,18 @@ def make_transactions(n: int = 60_000, seed: int = 42, include_hidden: bool = Fa
     log_ratio = np.log(amount_ratio)
     account_age = client_account_age[client]
     logit = (
-        -7.9
+        -8.3
         + 0.3 * log_ratio
-        + 1.5 * np.maximum(log_ratio, 0)  # крупные для клиента суммы подозрительнее
-        + 2.5 * (amount_ratio < 0.15)  # «проверочные» списания на маленькую сумму
+        + 1.8 * np.maximum(log_ratio, 0)  # крупные для клиента суммы подозрительнее
+        + 3.0 * (amount_ratio < 0.15)  # «проверочные» списания на маленькую сумму
         + _CATEGORY_EFFECT[category]
         + 0.6 * night
         + 0.4 * is_online
-        + 1.6 * (night & is_online)
-        + 2.0 * is_foreign
+        + 2.0 * (night & is_online)
+        + 2.5 * is_foreign
         + 1.4 * new_device
-        + 1.8 * (new_device & is_online)
-        + 0.6 * np.minimum(tx_last_24h, 6)
+        + 2.2 * (new_device & is_online)
+        + 0.7 * np.minimum(tx_last_24h, 6)
         + 1.0 * (account_age < 90)
         - 0.2 * np.log(account_age / 365)
         + 0.6 * day / 180
