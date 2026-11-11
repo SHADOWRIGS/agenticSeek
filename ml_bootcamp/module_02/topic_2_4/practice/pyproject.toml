@@ -1,0 +1,29 @@
+[project]
+name = "sales-dashboard-practice"
+version = "0.1.0"
+description = "Практика 2.4.4: интерактивный дашборд для разведочного анализа продаж"
+requires-python = ">=3.12"
+dependencies = [
+    "dash>=4.5",
+    "numpy>=2.0",
+    "pandas>=3.1",
+    "plotly>=7.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9",
+    "ruff>=0.17",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+# Dash регистрирует собственный плагин pytest для браузерных тестов; здесь он не нужен
+addopts = ["-p", "no:dash"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
