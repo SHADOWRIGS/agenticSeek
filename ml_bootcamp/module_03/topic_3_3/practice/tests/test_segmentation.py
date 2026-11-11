@@ -18,6 +18,7 @@ sys.path.insert(0, str(PRACTICE_DIR))
 sys.path.insert(0, str(PRACTICE_DIR.parent))
 
 from customers_data import SNAPSHOT_DATE, make_transactions  # noqa: E402
+
 from segmentation import (  # noqa: E402
     CLUSTER_FEATURES,
     FEATURES,
