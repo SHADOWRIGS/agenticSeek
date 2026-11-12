@@ -14,10 +14,10 @@
 
 | Урок | Название | Тип | Статус |
 |---|---|---|---|
-| 4.2.1 | Bagging, Out-of-Bag оценка, feature importance | теория | в разработке |
-| 4.2.2 | Extremely Randomized Trees, Random Patches | теория | в разработке |
-| 4.2.3 | Интерпретируемость RF: partial dependence plots | теория | в разработке |
-| 4.2.4 | ПРАКТИКА: Random Forest для задачи регрессии | практика | в разработке |
+| 4.2.1 | [Bagging, Out-of-Bag оценка, feature importance](topic_4_2/lesson_4_2_1.md) | теория | готов |
+| 4.2.2 | [Extremely Randomized Trees, Random Patches](topic_4_2/lesson_4_2_2.md) | теория | готов |
+| 4.2.3 | [Интерпретируемость RF: partial dependence plots](topic_4_2/lesson_4_2_3.md) | теория | готов |
+| 4.2.4 | [ПРАКТИКА: Random Forest для задачи регрессии](topic_4_2/lesson_4_2_4.md) | практика | готов |
 
 ## [Тема 4.3: Gradient Boosting](topic_4_3/README.md)
 
