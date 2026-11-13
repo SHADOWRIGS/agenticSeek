@@ -17,9 +17,9 @@ This is then executed by the tool with its own class implementation of execute()
 A tool is not just for code tool but also API, internet search, MCP, etc..
 """
 
-import sys
-import os
 import configparser
+import os
+import sys
 from abc import abstractmethod
 
 if __name__ == "__main__": # if running as a script for individual testing
@@ -27,7 +27,8 @@ if __name__ == "__main__": # if running as a script for individual testing
 
 from sources.logger import Logger
 
-class Tools():
+
+class Tools:
     """
     Abstract class for all tools.
     """
@@ -83,7 +84,6 @@ class Tools():
         Returns:
             str: The output/result from executing the tool
         """
-        pass
 
     @abstractmethod
     def execution_failure_check(self, output:str) -> bool:
@@ -94,7 +94,6 @@ class Tools():
         Returns:
             bool: True if execution failed, False if successful
         """
-        pass
 
     @abstractmethod
     def interpreter_feedback(self, output:str) -> str:
@@ -105,7 +104,6 @@ class Tools():
         Returns:
             str: The feedback message to the AI
         """
-        pass
 
     def save_block(self, blocks:[str], save_path:str) -> None:
         """

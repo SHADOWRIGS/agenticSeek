@@ -1,6 +1,8 @@
 
 from pydantic import BaseModel
+
 from sources.utility import pretty_print
+
 
 class QueryRequest(BaseModel):
     query: str

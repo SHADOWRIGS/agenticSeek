@@ -1,18 +1,21 @@
-import os, sys
-import requests
+import os
+import sys
+from typing import Any
 from urllib.parse import urljoin
-from typing import Dict, Any, Optional
+
+import requests
 
 if __name__ == "__main__": # if running as a script for individual testing
     sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from sources.tools.tools import Tools
 
+
 class MCP_finder(Tools):
     """
     Tool to find MCPs server
     """
-    def __init__(self, api_key: str = None):
+    def __init__(self, api_key: str | None = None):
         super().__init__()
         self.tag = "mcp_finder"
         self.name = "MCP Finder"
@@ -23,8 +26,8 @@ class MCP_finder(Tools):
             "Content-Type": "application/json"
         }
 
-    def _make_request(self, method: str, endpoint: str, params: Optional[Dict] = None, 
-                     data: Optional[Dict] = None) -> Dict[str, Any]:
+    def _make_request(self, method: str, endpoint: str, params: dict | None = None, 
+                     data: dict | None = None) -> dict[str, Any]:
         url = urljoin(self.base_url.rstrip(), endpoint)
         try:
             response = requests.request(
@@ -37,19 +40,19 @@ class MCP_finder(Tools):
             response.raise_for_status()
             return response.json()
         except requests.exceptions.HTTPError as e:
-            raise requests.exceptions.HTTPError(f"API request failed: {str(e)}")
+            raise requests.exceptions.HTTPError(f"API request failed: {e!s}")
         except requests.exceptions.RequestException as e:
-            raise requests.exceptions.RequestException(f"Network error: {str(e)}")
+            raise requests.exceptions.RequestException(f"Network error: {e!s}")
 
-    def list_mcp_servers(self, page: int = 1, page_size: int = 5000) -> Dict[str, Any]:
+    def list_mcp_servers(self, page: int = 1, page_size: int = 5000) -> dict[str, Any]:
         params = {"page": page, "pageSize": page_size}
         return self._make_request("GET", "/servers", params=params)
 
-    def get_mcp_server_details(self, qualified_name: str) -> Dict[str, Any]:
+    def get_mcp_server_details(self, qualified_name: str) -> dict[str, Any]:
         endpoint = f"/servers/{qualified_name}"
         return self._make_request("GET", endpoint)
     
-    def find_mcp_servers(self, query: str) -> Dict[str, Any]:
+    def find_mcp_servers(self, query: str) -> dict[str, Any]:
         """
         Finds a specific MCP server by its name.
         Args:
@@ -75,11 +78,11 @@ class MCP_finder(Tools):
             block_clean = block.strip().lower().replace('\n', '')
             try:
                 matching_mcp_infos = self.find_mcp_servers(block_clean)
-            except requests.exceptions.RequestException as e:
+            except requests.exceptions.RequestException:
                 output += "Connection failed. Is the API key in environment?\n"
                 continue
             except Exception as e:
-                output += f"Error: {str(e)}\n"
+                output += f"Error: {e!s}\n"
                 continue
             if matching_mcp_infos == []:
                 output += f"Error: No MCP server found for query '{block}'\n"
@@ -97,9 +100,7 @@ class MCP_finder(Tools):
         output = output.strip().lower()
         if not output:
             return True
-        if "error" in output or "not found" in output:
-            return True
-        return False
+        return bool("error" in output or "not found" in output)
 
     def interpreter_feedback(self, output: str) -> str:
         """

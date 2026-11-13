@@ -1,9 +1,9 @@
 import os
 
-from sources.utility import pretty_print, animate_thinking
 from sources.agents.agent import Agent
-from sources.tools.mcpFinder import MCP_finder
 from sources.memory import Memory
+from sources.tools.mcpFinder import MCP_finder
+from sources.utility import animate_thinking, pretty_print
 
 # NOTE MCP agent is an active work in progress, not functional yet.
 
@@ -60,7 +60,7 @@ class McpAgent(Agent):
         while working == True:
             animate_thinking("Thinking...", color="status")
             answer, reasoning = await self.llm_request()
-            exec_success, _ = self.execute_modules(answer)
+            _exec_success, _ = self.execute_modules(answer)
             answer = self.remove_blocks(answer)
             self.last_answer = answer
             self.status_message = "Ready"

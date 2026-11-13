@@ -1,10 +1,11 @@
 
-from colorama import Fore
-from termcolor import colored
+import itertools
 import platform
 import threading
-import itertools
 import time
+
+from colorama import Fore
+from termcolor import colored
 
 thinking_event = threading.Event()
 current_animation_thread = None

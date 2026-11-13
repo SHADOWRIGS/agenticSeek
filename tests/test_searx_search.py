@@ -1,9 +1,11 @@
-import unittest
 import os
 import sys
+import unittest
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))  # Add project root to Python path
-from sources.tools.searxSearch import searxSearch
 from dotenv import load_dotenv
+
+from sources.tools.searxSearch import searxSearch
 
 load_dotenv()
 

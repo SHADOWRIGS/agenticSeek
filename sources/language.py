@@ -1,18 +1,21 @@
-from typing import List
+
 import langid
 from transformers import MarianMTModel, MarianTokenizer
 
-from sources.utility import pretty_print, animate_thinking
 from sources.logger import Logger
+from sources.utility import animate_thinking, pretty_print
+
 
 class LanguageUtility:
     """LanguageUtility for language, or emotion identification"""
-    def __init__(self, supported_language: List[str] = ["en", "fr", "zh"]):
+    def __init__(self, supported_language: list[str] | None = None):
         """
         Initialize the LanguageUtility class
         args:
             supported_language: list of languages for translation, determine which Helsinki-NLP model to load
         """
+        if supported_language is None:
+            supported_language = ["en", "fr", "zh"]
         self.translators_tokenizer = None 
         self.translators_model = None
         self.logger = Logger("language.log")
@@ -68,8 +71,9 @@ class LanguageUtility:
             return {
                 "language": language
             }
-        except Exception as e:
-            raise e
+        except Exception:
+            self.logger.error("Language detection failed")
+            return {"language": "unknown"}
 
 if __name__ == "__main__":
     detector = LanguageUtility()

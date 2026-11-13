@@ -1,13 +1,14 @@
 
-import sys
 import os
 import re
+import sys
 from io import StringIO
 
 if __name__ == "__main__": # if running as a script for individual testing
     sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from sources.tools.tools import Tools
+
 
 class PyInterpreter(Tools):
     """
@@ -48,7 +49,7 @@ class PyInterpreter(Tools):
                 output = stdout_buffer.getvalue()
                 return f"[SystemExit caught] Output before exit:\n{output}"
             except Exception as e:
-                self.logger.error(f"Code execution failed: {str(e)}")
+                self.logger.error(f"Code execution failed: {e!s}")
                 return "code execution failed:" + str(e)
             output = stdout_buffer.getvalue()
         finally:

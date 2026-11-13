@@ -1,7 +1,8 @@
 
 import os
-import requests
+
 import dotenv
+import requests
 
 dotenv.load_dotenv()
 
@@ -14,7 +15,7 @@ webSearch is fully deprecated and is being replaced by searxSearch for web searc
 """
 
 class webSearch(Tools):
-    def __init__(self, api_key: str = None):
+    def __init__(self, api_key: str | None = None):
         """
         A tool to perform a Google search and return information from the first result.
         """
@@ -46,7 +47,7 @@ class webSearch(Tools):
             else:
                 return f"Status: {status} {response.reason}"
         except requests.exceptions.RequestException as e:
-            return f"Error: {str(e)}"
+            return f"Error: {e!s}"
 
     def check_all_links(self, links):
         """Check all links, one by one."""
@@ -94,9 +95,9 @@ class webSearch(Tools):
                 else:
                     return "No results found for the query."
             except requests.RequestException as e:
-                return f"Error during web search: {str(e)}"
+                return f"Error during web search: {e!s}"
             except Exception as e:
-                return f"Unexpected error: {str(e)}"
+                return f"Unexpected error: {e!s}"
         return "No search performed"
 
     def execution_failure_check(self, output: str) -> bool:

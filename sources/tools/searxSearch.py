@@ -1,16 +1,17 @@
+import os
+import sys
+
 import requests
 from bs4 import BeautifulSoup
-import os
-
-import sys
 
 if __name__ == "__main__": # if running as a script for individual testing
     sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from sources.tools.tools import Tools
 
+
 class searxSearch(Tools):
-    def __init__(self, base_url: str = None):
+    def __init__(self, base_url: str | None = None):
         """
         A tool for searching a SearxNG instance and extracting URLs and titles.
         """
@@ -48,7 +49,7 @@ class searxSearch(Tools):
             else:
                 return f"Status: {status} {response.reason}"
         except requests.exceptions.RequestException as e:
-            return f"Error: {str(e)}"
+            return f"Error: {e!s}"
 
     def check_all_links(self, links):
         """Check all links, one by one."""
@@ -79,7 +80,7 @@ class searxSearch(Tools):
             'Upgrade-Insecure-Requests': '1',
             'User-Agent': self.user_agent
         }
-        data = f"q={query}&categories=general&language=auto&time_range=&safesearch=0&theme=simple".encode('utf-8')
+        data = f"q={query}&categories=general&language=auto&time_range=&safesearch=0&theme=simple".encode()
         try:
             response = requests.post(search_url, headers=headers, data=data, verify=False)
             response.raise_for_status()

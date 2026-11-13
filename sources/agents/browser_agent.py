@@ -1,13 +1,13 @@
 import re
 from datetime import date
-from typing import List, Tuple
 from enum import Enum
 
-from sources.utility import pretty_print, animate_thinking
 from sources.agents.agent import Agent
-from sources.tools.searxSearch import searxSearch
 from sources.logger import Logger
 from sources.memory import Memory
+from sources.tools.searxSearch import searxSearch
+from sources.utility import animate_thinking, pretty_print
+
 
 class Action(Enum):
     REQUEST_EXIT = "REQUEST_EXIT"
@@ -45,7 +45,7 @@ class BrowserAgent(Agent):
         date_time = date.today()
         return date_time.strftime("%B %d, %Y")
 
-    def extract_links(self, search_result: str) -> List[str]:
+    def extract_links(self, search_result: str) -> list[str]:
         """Extract all links from a sentence."""
         pattern = r'(https?://\S+|www\.\S+)'
         matches = re.findall(pattern, search_result)
@@ -54,13 +54,12 @@ class BrowserAgent(Agent):
         self.logger.info(f"Extracted links: {cleaned_links}")
         return self.clean_links(cleaned_links)
     
-    def extract_form(self, text: str) -> List[str]:
+    def extract_form(self, text: str) -> list[str]:
         """Extract form written by the LLM in format [input_name](value)"""
-        inputs = []
         matches = re.findall(r"\[\w+\]\([^)]+\)", text)
         return matches
         
-    def clean_links(self, links: List[str]) -> List[str]:
+    def clean_links(self, links: list[str]) -> list[str]:
         """Ensure no '.' at the end of link"""
         links_clean = []
         for link in links:
@@ -71,7 +70,7 @@ class BrowserAgent(Agent):
                 links_clean.append(link)
         return links_clean
 
-    def get_unvisited_links(self) -> List[str]:
+    def get_unvisited_links(self) -> list[str]:
         return "\n".join([f"[{i}] {link}" for i, link in enumerate(self.navigable_links) if link not in self.search_history])
 
     def make_newsearch_prompt(self, prompt: str, search_result: dict) -> str:
@@ -174,7 +173,7 @@ class BrowserAgent(Agent):
         You must always take notes.
         """
     
-    async def llm_decide(self, prompt: str, show_reasoning: bool = False) -> Tuple[str, str]:
+    async def llm_decide(self, prompt: str, show_reasoning: bool = False) -> tuple[str, str]:
         animate_thinking("Thinking...", color="status")
         self.memory.push('user', prompt)
         answer, reasoning = await self.llm_request()
@@ -184,7 +183,7 @@ class BrowserAgent(Agent):
         pretty_print(answer, color="output")
         return answer, reasoning
     
-    def select_unvisited(self, search_result: List[str]) -> List[str]:
+    def select_unvisited(self, search_result: list[str]) -> list[str]:
         results_unvisited = []
         for res in search_result:
             if res["link"] not in self.search_history:
@@ -192,7 +191,7 @@ class BrowserAgent(Agent):
         self.logger.info(f"Unvisited links: {results_unvisited}")
         return results_unvisited
 
-    def jsonify_search_results(self, results_string: str) -> List[str]:
+    def jsonify_search_results(self, results_string: str) -> list[str]:
         result_blocks = results_string.split("\n\n")
         parsed_results = []
         for block in result_blocks:
@@ -211,7 +210,7 @@ class BrowserAgent(Agent):
                 parsed_results.append(result_dict)
         return parsed_results 
     
-    def stringify_search_results(self, results_arr: List[str]) -> str:
+    def stringify_search_results(self, results_arr: list[str]) -> str:
         return '\n\n'.join([f"Link: {res['link']}\nPreview: {res['snippet']}" for res in results_arr])
     
     def parse_answer(self, text):
@@ -231,7 +230,7 @@ class BrowserAgent(Agent):
         self.notes.append('. '.join(buffer).strip())
         return links
     
-    def select_link(self, links: List[str]) -> str | None:
+    def select_link(self, links: list[str]) -> str | None:
         """
         Select the first unvisited link that is not the current page.
         Preference is given to links not in search_history.
@@ -307,13 +306,13 @@ class BrowserAgent(Agent):
             """
         return prompt
     
-    def show_search_results(self, search_result: List[str]):
+    def show_search_results(self, search_result: list[str]):
         pretty_print("\nSearch results:", color="output")
         for res in search_result:
             pretty_print(f"Title: {res['title']} - ", color="info", no_newline=True)
             pretty_print(f"Link: {res['link']}", color="status")
     
-    def stuck_prompt(self, user_prompt: str, unvisited: List[str]) -> str:
+    def stuck_prompt(self, user_prompt: str, unvisited: list[str]) -> str:
         """
         Prompt for when the agent repeat itself, can happen when fail to extract a link.
         """
@@ -325,7 +324,7 @@ class BrowserAgent(Agent):
         """
         return prompt
     
-    async def process(self, user_prompt: str, speech_module: type) -> Tuple[str, str]:
+    async def process(self, user_prompt: str, speech_module: type) -> tuple[str, str]:
         """
         Process the user prompt to conduct an autonomous web search.
         Start with a google search with searxng using web_search tool.
@@ -339,7 +338,7 @@ class BrowserAgent(Agent):
         complete = False
 
         animate_thinking("Thinking...", color="status")
-        mem_begin_idx = self.memory.push('user', self.search_prompt(user_prompt))
+        self.memory.push('user', self.search_prompt(user_prompt))
         ai_prompt, reasoning = await self.llm_request()
         if Action.REQUEST_EXIT.value in ai_prompt:
             pretty_print(f"Web agent requested exit.\n{reasoning}\n\n{ai_prompt}", color="failure")
@@ -422,7 +421,7 @@ class BrowserAgent(Agent):
 
         pretty_print("Exited navigation, starting to summarize finding...", color="status")
         prompt = self.conclude_prompt(user_prompt)
-        mem_last_idx = self.memory.push('user', prompt)
+        self.memory.push('user', prompt)
         self.status_message = "Summarizing findings..."
         answer, reasoning = await self.llm_request()
         pretty_print(answer, color="output")

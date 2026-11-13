@@ -1,12 +1,14 @@
-import subprocess
-import os, sys
-import tempfile
+import os
 import re
+import subprocess
+import sys
+import tempfile
 
 if __name__ == "__main__": # if running as a script for individual testing
     sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from sources.tools.tools import Tools
+
 
 class CInterpreter(Tools):
     """
@@ -61,11 +63,11 @@ class CInterpreter(Tools):
                 output = run_result.stdout
 
             except subprocess.TimeoutExpired as e:
-                return f"Execution timed out: {str(e)}"
+                return f"Execution timed out: {e!s}"
             except FileNotFoundError:
                 return "Error: 'gcc' not found. Ensure a C compiler (e.g., gcc) is installed and in PATH."
             except Exception as e:
-                return f"Code execution failed: {str(e)}"
+                return f"Code execution failed: {e!s}"
 
         return output
 
@@ -96,9 +98,7 @@ class CInterpreter(Tools):
             r"cannot"
         ]
         combined_pattern = "|".join(error_patterns)
-        if re.search(combined_pattern, feedback, re.IGNORECASE):
-            return True
-        return False
+        return bool(re.search(combined_pattern, feedback, re.IGNORECASE))
 
 if __name__ == "__main__":
     codes = [

@@ -1,7 +1,8 @@
 
-from sources.utility import animate_thinking
 from sources.agents.agent import Agent
 from sources.memory import Memory
+from sources.utility import animate_thinking
+
 
 class CasualAgent(Agent):
     def __init__(self, name, prompt_path, provider, verbose=False):

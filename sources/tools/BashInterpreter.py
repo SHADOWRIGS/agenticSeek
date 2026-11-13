@@ -1,13 +1,15 @@
 
-import os, sys
+import os
 import re
 import subprocess
+import sys
 
 if __name__ == "__main__": # if running as a script for individual testing
     sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from sources.tools.tools import Tools
 from sources.tools.safety import is_any_unsafe
+from sources.tools.tools import Tools
+
 
 class BashInterpreter(Tools):
     """
@@ -66,7 +68,7 @@ class BashInterpreter(Tools):
                 process.kill()  # Kill the process if it times out
                 return f"Command {command} timed out. Output:\n{command_output}"
             except Exception as e:
-                return f"Command {command} failed:\n{str(e)}"
+                return f"Command {command} failed:\n{e!s}"
         return concat_output
 
     def interpreter_feedback(self, output):
@@ -112,9 +114,7 @@ class BashInterpreter(Tools):
             r"not known"
         ]
         combined_pattern = "|".join(error_patterns)
-        if re.search(combined_pattern, feedback, re.IGNORECASE):
-            return True
-        return False
+        return bool(re.search(combined_pattern, feedback, re.IGNORECASE))
 
 if __name__ == "__main__":
     bash = BashInterpreter()

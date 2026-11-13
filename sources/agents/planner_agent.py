@@ -1,15 +1,16 @@
 import json
-from typing import List, Tuple
-from sources.utility import pretty_print, animate_thinking
+
 from sources.agents.agent import Agent
-from sources.agents.code_agent import CoderAgent
-from sources.agents.file_agent import FileAgent
 from sources.agents.browser_agent import BrowserAgent
 from sources.agents.casual_agent import CasualAgent
-from sources.text_to_speech import Speech
-from sources.tools.tools import Tools
+from sources.agents.code_agent import CoderAgent
+from sources.agents.file_agent import FileAgent
 from sources.logger import Logger
 from sources.memory import Memory
+from sources.text_to_speech import Speech
+from sources.tools.tools import Tools
+from sources.utility import animate_thinking, pretty_print
+
 
 class PlannerAgent(Agent):
     def __init__(self, name, prompt_path, provider, verbose=False, browser=None):
@@ -36,7 +37,7 @@ class PlannerAgent(Agent):
                                 model_provider=provider.get_model_name())
         self.logger = Logger("planner_agent.log")
     
-    def get_task_names(self, text: str) -> List[str]:
+    def get_task_names(self, text: str) -> list[str]:
         """
         Extracts task names from the given text.
         This method processes a multi-line string, where each line may represent a task name.
@@ -60,7 +61,7 @@ class PlannerAgent(Agent):
         self.logger.info(f"Found {len(tasks_names)} tasks names.")
         return tasks_names
 
-    def parse_agent_tasks(self, text: str) -> List[Tuple[str, str]]:
+    def parse_agent_tasks(self, text: str) -> list[tuple[str, str]]:
         """
         Parses agent tasks from the given LLM text.
         This method extracts task information from a JSON. It identifies task names and their details.
@@ -79,7 +80,7 @@ class PlannerAgent(Agent):
             line_json = json.loads(block)
             if 'plan' in line_json:
                 for task in line_json['plan']:
-                    if task['agent'].lower() not in [ag_name.lower() for ag_name in self.agents.keys()]:
+                    if task['agent'].lower() not in [ag_name.lower() for ag_name in self.agents]:
                         self.logger.warning(f"Agent {task['agent']} does not exist.")
                         pretty_print(f"Agent {task['agent']} does not exist.", color="warning")
                         return []
@@ -89,7 +90,7 @@ class PlannerAgent(Agent):
                             'id': task['id'],
                             'task': task['task']
                         }
-                    except:
+                    except (KeyError, TypeError):
                         self.logger.warning("Missing field in json plan.")
                         return []
                     self.logger.info(f"Created agent {task['agent']} with task: {task['task']}")
@@ -126,7 +127,7 @@ class PlannerAgent(Agent):
         self.logger.info(f"Prompt for agent:\n{prompt}")
         return prompt
     
-    def show_plan(self, agents_tasks: List[dict], answer: str) -> None:
+    def show_plan(self, agents_tasks: list[dict], answer: str) -> None:
         """
         Displays the plan made by the agent.
         Args:
@@ -155,7 +156,7 @@ class PlannerAgent(Agent):
         while not ok:
             animate_thinking("Thinking...", color="status")
             self.memory.push('user', prompt)
-            answer, reasoning = await self.llm_request()
+            answer, _reasoning = await self.llm_request()
             if "NO_UPDATE" in answer:
                 return []
             agents_tasks = self.parse_agent_tasks(answer)
@@ -169,7 +170,7 @@ class PlannerAgent(Agent):
         self.logger.info(f"Plan made:\n{answer}")
         return self.parse_agent_tasks(answer)
     
-    async def update_plan(self, goal: str, agents_tasks: List[dict], agents_work_result: dict, id: str, success: bool) -> dict:
+    async def update_plan(self, goal: str, agents_tasks: list[dict], agents_work_result: dict, id: str, success: bool) -> dict:
         """
         Updates the plan with the results of the agents work.
         Args:
@@ -185,7 +186,7 @@ class PlannerAgent(Agent):
         pretty_print(f"Agent {id} work {tool_success_str}.", color="success" if success else "failure")
         try:
             id_int = int(id)
-        except Exception as e:
+        except Exception:
             return agents_tasks
         if id_int == len(agents_tasks):
             next_task = "No task follow, this was the last step. If it failed add a task to recover."
@@ -247,7 +248,7 @@ class PlannerAgent(Agent):
         self.logger.info(f"Next agent needs: {task_needs}.\n Match previous agent result: {res}")
         return res
 
-    async def process(self, goal: str, speech_module: Speech) -> Tuple[str, str]:
+    async def process(self, goal: str, speech_module: Speech) -> tuple[str, str]:
         """
         Process the goal by dividing it into tasks and assigning them to agents.
         Args:
@@ -258,7 +259,7 @@ class PlannerAgent(Agent):
         """
         agents_tasks = []
         required_infos = None
-        agents_work_result = dict()
+        agents_work_result = {}
 
         self.status_message = "Making a plan..."
         agents_tasks = await self.make_plan(goal)
@@ -277,10 +278,7 @@ class PlannerAgent(Agent):
 
             if agents_work_result is not None:
                 required_infos = self.get_work_result_agent(task['need'], agents_work_result)
-            try:
-                answer, success = await self.start_agent_process(task, required_infos)
-            except Exception as e:
-                raise e
+            answer, success = await self.start_agent_process(task, required_infos)
             if self.stop:
                 pretty_print("Requested stop.", color="failure")
             agents_work_result[task['id']] = answer

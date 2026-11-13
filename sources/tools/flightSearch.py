@@ -1,6 +1,8 @@
-import os, sys
-import requests
+import os
+import sys
+
 import dotenv
+import requests
 
 dotenv.load_dotenv()
 
@@ -9,8 +11,9 @@ if __name__ == "__main__": # if running as a script for individual testing
 
 from sources.tools.tools import Tools
 
+
 class FlightSearch(Tools):
-    def __init__(self, api_key: str = None):
+    def __init__(self, api_key: str | None = None):
         """
         A tool to search for flight information using a flight number via SerpApi.
         """
@@ -67,9 +70,9 @@ class FlightSearch(Tools):
                     return f"No flight information found for {flight_number}"
                     
             except requests.RequestException as e:
-                return f"Error during flight search: {str(e)}"
+                return f"Error during flight search: {e!s}"
             except Exception as e:
-                return f"Unexpected error: {str(e)}"
+                return f"Unexpected error: {e!s}"
         
         return "No flight search performed"
 

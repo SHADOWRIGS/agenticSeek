@@ -1,19 +1,18 @@
 
-from typing import Tuple, Callable
-from abc import abstractmethod
+import asyncio
 import os
 import random
 import time
-
-import asyncio
+from abc import abstractmethod
+from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 
-from sources.utility import pretty_print
 from sources.schemas import executorResult
+from sources.utility import pretty_print
 
 random.seed(time.time())
 
-class Agent():
+class Agent:
     """
     An abstract class for all agents.
     """
@@ -116,8 +115,8 @@ class Agent():
             raise FileNotFoundError(f"Prompt file not found at path: {file_path}")
         except PermissionError:
             raise PermissionError(f"Permission denied to read prompt file at path: {file_path}")
-        except Exception as e:
-            raise e
+        except Exception:
+            raise
     
     def request_stop(self) -> None:
         """
@@ -132,7 +131,6 @@ class Agent():
         abstract method, implementation in child class.
         Process the prompt and return the answer of the agent.
         """
-        pass
 
     def remove_reasoning_text(self, text: str) -> None:
         """
@@ -156,7 +154,7 @@ class Agent():
         end_idx = text.rfind(end_tag)+8
         return text[start_idx:end_idx]
     
-    async def llm_request(self) -> Tuple[str, str]:
+    async def llm_request(self) -> tuple[str, str]:
         """
         Asynchronously ask the LLM to process the prompt.
         """
@@ -164,7 +162,7 @@ class Agent():
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(self.executor, self.sync_llm_request)
     
-    def sync_llm_request(self) -> Tuple[str, str]:
+    def sync_llm_request(self) -> tuple[str, str]:
         """
         Ask the LLM to process the prompt and return the answer and the reasoning.
         """
@@ -251,7 +249,7 @@ class Agent():
         pretty_print(block, color="code")
         pretty_print('▂'*64, color="status")
 
-    def execute_modules(self, answer: str) -> Tuple[bool, str]:
+    def execute_modules(self, answer: str) -> tuple[bool, str]:
         """
         Execute all the tools the agent has and return the result.
         """

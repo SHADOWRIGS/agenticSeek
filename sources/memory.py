@@ -1,19 +1,20 @@
+import configparser
 import datetime
-import uuid
+import json
 import os
 import sys
-import json
-import torch
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-import configparser
+import uuid
 
-from sources.utility import pretty_print, animate_thinking
+import torch
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+
 from sources.logger import Logger
+from sources.utility import animate_thinking, pretty_print
 
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-class Memory():
+class Memory:
     """
     Memory is a class for managing the conversation memory
     It provides a method to compress the memory using summarization model.
@@ -46,8 +47,8 @@ class Memory():
         Estimate context size based on the model name.
         EXPERIMENTAL for memory compression
         """
-        import re
         import math
+        import re
 
         def extract_number_before_b(sentence: str) -> int:
             match = re.search(r'(\d+)b', sentence, re.IGNORECASE)
@@ -149,7 +150,9 @@ class Memory():
         self.compress()
         pretty_print("Session recovered successfully", color="success")
     
-    def reset(self, memory: list = []) -> None:
+    def reset(self, memory: list | None = None) -> None:
+        if memory is None:
+            memory = []
         self.logger.info("Memory reset performed.")
         self.memory = memory
     

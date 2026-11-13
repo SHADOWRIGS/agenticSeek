@@ -1,14 +1,15 @@
-import os, sys
-import re
+import os
 import platform
+import re
 import subprocess
+import sys
 from sys import modules
 
 IMPORT_FOUND = True
 try:
-    from kokoro import KPipeline
-    from IPython.display import display, Audio
     import soundfile as sf
+    from IPython.display import Audio, display
+    from kokoro import KPipeline
 except ImportError:
     print("Speech synthesis disabled. Please install the kokoro package.")
     IMPORT_FOUND = False
@@ -18,7 +19,7 @@ if __name__ == "__main__":
 else:
     from sources.utility import pretty_print
 
-class Speech():
+class Speech:
     """
     Speech is a class for generating speech from text.
     """
@@ -180,10 +181,10 @@ if __name__ == "__main__":
     J'ai consulté les dernières nouvelles sur le site https://www.theguardian.com/world
     """
     spk = Speech(enable=True, language="zh", voice_idx=0)
-    for i in range(0, 2):
+    for i in range(2):
         print(f"Speaking chinese with voice {i}")
         spk.speak(tosay_zh, voice_idx=i)
     spk = Speech(enable=True, language="en", voice_idx=2)
-    for i in range(0, 5):
+    for i in range(5):
         print(f"Speaking english with voice {i}")
         spk.speak(tosay_en, voice_idx=i)

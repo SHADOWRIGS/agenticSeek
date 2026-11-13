@@ -1,15 +1,16 @@
-from colorama import Fore
 import queue
 import threading
-import numpy as np
 import time
+
+import numpy as np
+from colorama import Fore
 
 IMPORT_FOUND = True
 
 try:
-    import torch
     import librosa
     import pyaudio
+    import torch
     from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
 except ImportError:
     print(Fore.RED + "Speech To Text disabled." + Fore.RESET)
@@ -48,7 +49,7 @@ class AudioRecorder:
 
         while not done:
             frames = []
-            for _ in range(0, int(self.rate / self.chunk * self.record_seconds)):
+            for _ in range(int(self.rate / self.chunk * self.record_seconds)):
                 try:
                     data = stream.read(self.chunk, exception_on_overflow=False)
                     frames.append(data)
@@ -192,11 +193,11 @@ class AudioTranscriber:
                 end_time = time.time()
                 self.recorded += text
                 print(Fore.YELLOW + f"Transcribed: {text} in {end_time - start_time} seconds" + Fore.RESET)
-                for language, words in self.trigger_words.items():
+                for words in self.trigger_words.values():
                     if any(word in text.lower() for word in words):
                         print(Fore.GREEN + "Listening again..." + Fore.RESET)
                         self.recorded = text
-                for language, words in self.confirmation_words.items():
+                for words in self.confirmation_words.values():
                     if any(word in text.lower() for word in words):
                         print(Fore.GREEN + "Trigger detected. Sending to AI..." + Fore.RESET)
                         audio_queue.task_done()

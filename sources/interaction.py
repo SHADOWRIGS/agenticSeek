@@ -1,10 +1,9 @@
-from typing import List, Dict
-
-from sources.text_to_speech import Speech
-from sources.utility import pretty_print, animate_thinking
-from sources.router import AgentRouter
-from sources.speech_to_text import AudioTranscriber, AudioRecorder
 import threading
+
+from sources.router import AgentRouter
+from sources.speech_to_text import AudioRecorder, AudioTranscriber
+from sources.text_to_speech import Speech
+from sources.utility import animate_thinking, pretty_print
 
 
 class Interaction:
@@ -15,8 +14,10 @@ class Interaction:
                  tts_enabled: bool = True,
                  stt_enabled: bool = True,
                  recover_last_session: bool = False,
-                 langs: List[str] = ["en", "zh"]
+                 langs: list[str] | None = None
                 ):
+        if langs is None:
+            langs = ["en", "zh"]
         self.is_active = True
         self.current_agent = None
         self.last_query = None
@@ -76,7 +77,7 @@ class Interaction:
                 break
         return ai_name
     
-    def get_last_blocks_result(self) -> List[Dict]:
+    def get_last_blocks_result(self) -> list[dict]:
         """Get the last blocks result."""
         if self.current_agent is None:
             return []

@@ -2,6 +2,7 @@ import os
 import platform
 import socket
 import subprocess
+import sys
 import time
 from urllib.parse import urlparse
 
@@ -12,7 +13,8 @@ from ollama import Client as OllamaClient
 from openai import OpenAI
 
 from sources.logger import Logger
-from sources.utility import pretty_print, animate_thinking
+from sources.utility import animate_thinking, pretty_print
+
 
 class Provider:
     def __init__(self, provider_name, model, server_address="127.0.0.1:5000", is_local=False):
@@ -55,7 +57,7 @@ class Provider:
         api_key = os.getenv(api_key_var)
         if not api_key:
             pretty_print(f"API key {api_key_var} not found in .env file. Please add it", color="warning")
-            exit(1)
+            sys.exit(1)
         return api_key
     
     def get_internal_url(self):
@@ -77,18 +79,18 @@ class Provider:
             self.logger.warning("User interrupted the operation with Ctrl+C")
             return "Operation interrupted by user. REQUEST_EXIT"
         except ConnectionError as e:
-            raise ConnectionError(f"{str(e)}\nConnection to {self.server_ip} failed.")
+            raise ConnectionError(f"{e!s}\nConnection to {self.server_ip} failed.")
         except AttributeError as e:
-            raise NotImplementedError(f"{str(e)}\nIs {self.provider_name} implemented ?")
+            raise NotImplementedError(f"{e!s}\nIs {self.provider_name} implemented ?")
         except ModuleNotFoundError as e:
             raise ModuleNotFoundError(
-                f"{str(e)}\nA import related to provider {self.provider_name} was not found. Is it installed ?")
+                f"{e!s}\nA import related to provider {self.provider_name} was not found. Is it installed ?")
         except Exception as e:
             if "try again later" in str(e).lower():
                 return f"{self.provider_name} server is overloaded. Please try again later."
             if "refused" in str(e):
                 return f"Server {self.server_ip} seem offline. Unable to answer."
-            raise Exception(f"Provider {self.provider_name} failed: {str(e)}") from e
+            raise Exception(f"Provider {self.provider_name} failed: {e!s}") from e
         return thought
 
     def is_ip_online(self, address: str, timeout: int = 10) -> bool:
@@ -110,9 +112,9 @@ class Provider:
         param = '-n' if platform.system().lower() == 'windows' else '-c'
         command = ['ping', param, '1', ip_address]
         try:
-            result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout)
+            result = subprocess.run(command, capture_output=True, timeout=timeout)
             return result.returncode == 0
-        except (subprocess.TimeoutExpired, subprocess.SubprocessError) as e:
+        except (subprocess.TimeoutExpired, subprocess.SubprocessError):
             return False
 
     def server_fn(self, history, verbose=False):
@@ -140,19 +142,19 @@ class Provider:
                     is_complete = bool(response.json()["is_complete"])
                     time.sleep(2)
                 except requests.exceptions.RequestException as e:
-                    pretty_print(f"HTTP request failed: {str(e)}", color="failure")
+                    pretty_print(f"HTTP request failed: {e!s}", color="failure")
                     break
                 except ValueError as e:
-                    pretty_print(f"Failed to parse JSON response: {str(e)}", color="failure")
+                    pretty_print(f"Failed to parse JSON response: {e!s}", color="failure")
                     break
                 except Exception as e:
-                    pretty_print(f"An error occurred: {str(e)}", color="failure")
+                    pretty_print(f"An error occurred: {e!s}", color="failure")
                     break
         except KeyError as e:
             raise Exception(
-                f"{str(e)}\nError occured with server route. Are you using the correct address for the config.ini provider?") from e
-        except Exception as e:
-            raise e
+                f"{e!s}\nError occured with server route. Are you using the correct address for the config.ini provider?") from e
+        except Exception:
+            raise
         return thought
 
     def ollama_fn(self, history, verbose=False):
@@ -186,7 +188,7 @@ class Provider:
                 raise Exception(
                     f"Ollama connection refused at {host}. Is the server running?"
                 ) from e
-            raise e
+            raise
 
         return thought
 
@@ -213,8 +215,8 @@ class Provider:
         base_url = self.server_ip
         if self.is_local and self.in_docker:
             try:
-                host, port = base_url.split(':')
-            except Exception as e:
+                _host, port = base_url.split(':')
+            except Exception:
                 port = "8000"
             client = OpenAI(api_key=self.api_key, base_url=f"{self.internal_url}:{port}")
         elif self.is_local:
@@ -234,7 +236,7 @@ class Provider:
                 print(thought)
             return thought
         except Exception as e:
-            raise Exception(f"OpenAI API error: {str(e)}") from e
+            raise Exception(f"OpenAI API error: {e!s}") from e
 
     def anthropic_fn(self, history, verbose=False):
         """
@@ -266,13 +268,12 @@ class Provider:
                 print(thought)
             return thought
         except Exception as e:
-            raise Exception(f"Anthropic API error: {str(e)}") from e
+            raise Exception(f"Anthropic API error: {e!s}") from e
 
     def google_fn(self, history, verbose=False):
         """
         Use google gemini to generate text.
         """
-        base_url = self.server_ip
         if self.is_local:
             raise Exception("Google Gemini is not available for local use. Change config.ini")
 
@@ -289,7 +290,7 @@ class Provider:
                 print(thought)
             return thought
         except Exception as e:
-            raise Exception(f"GOOGLE API error: {str(e)}") from e
+            raise Exception(f"GOOGLE API error: {e!s}") from e
 
     def together_fn(self, history, verbose=False):
         """
@@ -312,7 +313,7 @@ class Provider:
                 print(thought)
             return thought
         except Exception as e:
-            raise Exception(f"Together AI API error: {str(e)}") from e
+            raise Exception(f"Together AI API error: {e!s}") from e
 
     def deepseek_fn(self, history, verbose=False):
         """
@@ -332,7 +333,7 @@ class Provider:
                 print(thought)
             return thought
         except Exception as e:
-            raise Exception(f"Deepseek API error: {str(e)}") from e
+            raise Exception(f"Deepseek API error: {e!s}") from e
 
     def lm_studio_fn(self, history, verbose=False):
         """
@@ -382,11 +383,11 @@ class Provider:
         except requests.exceptions.ConnectionError:
             raise Exception(f"Cannot connect to LM Studio at {route_start} - check if server is running")
         except requests.exceptions.RequestException as e:
-            raise Exception(f"HTTP request failed: {str(e)}") from e
+            raise Exception(f"HTTP request failed: {e!s}") from e
         except Exception as e:
             if "LM Studio" in str(e):
                 raise  # Re-raise our custom exceptions
-            raise Exception(f"Unexpected error: {str(e)}") from e
+            raise Exception(f"Unexpected error: {e!s}") from e
 
     def openrouter_fn(self, history, verbose=False):
         """
@@ -409,7 +410,7 @@ class Provider:
                 print(thought)
             return thought
         except Exception as e:
-            raise Exception(f"OpenRouter API error: {str(e)}") from e
+            raise Exception(f"OpenRouter API error: {e!s}") from e
 
     def dsk_deepseek(self, history, verbose=False):
         """
@@ -418,12 +419,12 @@ class Provider:
         This is an unofficial provider, you'll have to find how to set it up yourself.
         """
         from dsk.api import (
-            DeepSeekAPI,
+            APIError,
             AuthenticationError,
-            RateLimitError,
-            NetworkError,
             CloudflareError,
-            APIError
+            DeepSeekAPI,
+            NetworkError,
+            RateLimitError,
         )
         thought = ""
         message = '\n---\n'.join([f"{msg['role']}: {msg['content']}" for msg in history])
@@ -440,11 +441,11 @@ class Provider:
         except RateLimitError as e:
             raise RateLimitError("Rate limit exceeded. Please wait before making more requests.") from e
         except CloudflareError as e:
-            raise CloudflareError(f"Cloudflare protection encountered: {str(e)}") from e
+            raise CloudflareError(f"Cloudflare protection encountered: {e!s}") from e
         except NetworkError as e:
             raise NetworkError("Network error occurred. Check your internet connection.") from e
         except APIError as e:
-            raise APIError(f"API error occurred: {str(e)}") from e
+            raise APIError(f"API error occurred: {e!s}") from e
         return None
 
     def test_fn(self, history, verbose=True):

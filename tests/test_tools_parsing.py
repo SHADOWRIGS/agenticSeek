@@ -1,10 +1,12 @@
-import unittest
 import os
 import sys
 import tempfile
+import unittest
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from sources.tools.tools import Tools
+
 
 class TestToolsParsing(unittest.TestCase):
     """
@@ -96,7 +98,7 @@ print("Hello with save path")
     ```
     End of code."""
         
-        blocks, save_path = self.tool.load_exec_block(llm_text)
+        blocks, _save_path = self.tool.load_exec_block(llm_text)
         
         self.assertIsNotNone(blocks)
         self.assertEqual(len(blocks), 1)
@@ -141,7 +143,7 @@ x = 42"""
         llm_text = """```python
 ```"""
         
-        blocks, save_path = self.tool.load_exec_block(llm_text)
+        blocks, _save_path = self.tool.load_exec_block(llm_text)
         
         self.assertIsNotNone(blocks)
         self.assertEqual(len(blocks), 1)
@@ -171,7 +173,7 @@ print(result)
 
 That should work!"""
         
-        blocks, save_path = self.tool.load_exec_block(llm_text)
+        blocks, _save_path = self.tool.load_exec_block(llm_text)
         
         self.assertIsNotNone(blocks)
         self.assertEqual(len(blocks), 3)
@@ -187,7 +189,7 @@ regex = r"^\\d+$"
 path = "C:\\Users\\test\\file.txt"
 ```"""
         
-        blocks, save_path = self.tool.load_exec_block(llm_text)
+        blocks, _save_path = self.tool.load_exec_block(llm_text)
         
         self.assertIsNotNone(blocks)
         self.assertEqual(len(blocks), 1)
@@ -212,7 +214,7 @@ print("test")
 print("test")
 ```"""
         
-        blocks, save_path = self.tool.load_exec_block(llm_text)
+        _blocks, _save_path = self.tool.load_exec_block(llm_text)
         
         self.assertTrue(self.tool.found_executable_blocks())
         

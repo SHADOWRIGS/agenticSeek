@@ -1,31 +1,35 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, WebDriverException, ElementClickInterceptedException
-from selenium.webdriver.common.action_chains import ActionChains
-from typing import List
-from bs4 import BeautifulSoup
-from urllib.parse import urlparse
-from selenium_stealth import stealth
-import undetected_chromedriver as uc
-import chromedriver_autoinstaller
-import ssl
-import time
-import random
 import os
-import shutil
-import uuid
-import markdownify
-import sys
+import random
 import re
+import shutil
+import ssl
+import sys
+import time
+import uuid
+from urllib.parse import urlparse
+
+import chromedriver_autoinstaller
+import markdownify
+import undetected_chromedriver as uc
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.common.exceptions import (
+    ElementClickInterceptedException,
+    TimeoutException,
+    WebDriverException,
+)
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium_stealth import stealth
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from sources.utility import pretty_print
 from sources.logger import Logger
+from sources.utility import pretty_print
 
 
 def get_chrome_path() -> str:
@@ -197,7 +201,7 @@ def create_undetected_chromedriver(service, chrome_options) -> webdriver.Chrome:
     try:
         driver = uc.Chrome(service=service, options=chrome_options)
     except Exception as e:
-        pretty_print(f"Failed to create Chrome driver: {str(e)}. Trying to bypass SSL...", color="failure")
+        pretty_print(f"Failed to create Chrome driver: {e!s}. Trying to bypass SSL...", color="failure")
         try:
             bypass_ssl()
             # Create NEW options object - this is the key fix
@@ -208,8 +212,8 @@ def create_undetected_chromedriver(service, chrome_options) -> webdriver.Chrome:
             )
             driver = uc.Chrome(service=service, options=fresh_options)
         except Exception as e:
-            pretty_print(f"Failed to create Chrome driver, fallback failed:\n{str(e)}.", color="failure")
-            raise e
+            pretty_print(f"Failed to create Chrome driver, fallback failed:\n{e!s}.", color="failure")
+            raise
     
     driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})") 
     return driver
@@ -243,7 +247,7 @@ def create_driver(headless=False, stealth_mode=True, crx_path="./crx/nopecha.crx
 class Browser:
     def __init__(self, driver, anticaptcha_manual_install=False):
         """Initialize the browser with optional AntiCaptcha installation."""
-        self.js_scripts_folder = "./sources/web_scripts/" if not __name__ == "__main__" else "./web_scripts/"
+        self.js_scripts_folder = "./sources/web_scripts/" if __name__ != "__main__" else "./web_scripts/"
         self.anticaptcha = "https://chrome.google.com/webstore/detail/nopecha-captcha-solver/dknlfmjaanfblgfdfebhijalfmhmjjjo/related"
         self.logger = Logger("browser.log")
         self.screenshot_folder = os.path.join(os.getcwd(), ".screenshots")
@@ -252,7 +256,7 @@ class Browser:
             self.driver = driver
             self.wait = WebDriverWait(self.driver, 10)
         except Exception as e:
-            raise Exception(f"Failed to initialize browser: {str(e)}")
+            raise Exception(f"Failed to initialize browser: {e!s}")
         self.setup_tabs()
         self.patch_browser_fingerprint()
         if anticaptcha_manual_install:
@@ -264,7 +268,6 @@ class Browser:
             self.driver.get("https://www.google.com")
         except Exception as e:
             self.logger.log("Failed to setup initial tab:" + str(e))
-            pass
         self.screenshot()
     
     def switch_control_tab(self):
@@ -277,7 +280,6 @@ class Browser:
             self.driver.get(self.anticaptcha)
         except Exception as e:
             self.logger.log("Failed to setup initial tab:" + str(e))
-            pass
 
     def human_move(element):
         actions = ActionChains(driver)
@@ -304,7 +306,6 @@ class Browser:
         """Navigate to a specified URL."""
         time.sleep(random.uniform(0.4, 2.5))
         try:
-            initial_handles = self.driver.window_handles
             self.driver.get(url)
             time.sleep(random.uniform(0.01, 0.3))
             try:
@@ -323,14 +324,14 @@ class Browser:
             self.logger.log(f"Navigated to: {url}")
             return True
         except TimeoutException as e:
-            self.logger.error(f"Timeout waiting for {url} to load: {str(e)}")
+            self.logger.error(f"Timeout waiting for {url} to load: {e!s}")
             return False
         except WebDriverException as e:
-            self.logger.error(f"Error navigating to {url}: {str(e)}")
+            self.logger.error(f"Error navigating to {url}: {e!s}")
             return False
         except Exception as e:
-            self.logger.error(f"Fatal error with go_to method on {url}:\n{str(e)}")
-            raise e
+            self.logger.error(f"Fatal error with go_to method on {url}:\n{e!s}")
+            raise
 
     def is_sentence(self, text:str) -> bool:
         """Check if the text qualifies as a meaningful sentence or contains important error codes."""
@@ -371,7 +372,7 @@ class Browser:
             self.logger.info(f"Extracted text length: {len(result)}")
             return result[:32768]
         except Exception as e:
-            self.logger.error(f"Error getting text: {str(e)}")
+            self.logger.error(f"Error getting text: {e!s}")
             return None
     
     def clean_url(self, url:str) -> str:
@@ -383,9 +384,9 @@ class Browser:
             query = parts[1]
             essential_params = []
             for param in query.split('&'):
-                if param.startswith('_skw=') or param.startswith('q=') or param.startswith('s='):
+                if param.startswith(('_skw=', 'q=', 's=')):
                     essential_params.append(param)
-                elif param.startswith('_') or param.startswith('hash=') or param.startswith('itmmeta='):
+                elif param.startswith(('_', 'hash=', 'itmmeta=')):
                     break
             if essential_params:
                 return f"{base_url}?{'&'.join(essential_params)}"
@@ -409,7 +410,7 @@ class Browser:
                 return False
         return True
 
-    def get_navigable(self) -> List[str]:
+    def get_navigable(self) -> list[str]:
         """Get all navigable links on the current page."""
         try:
             links = []
@@ -427,7 +428,7 @@ class Browser:
             self.logger.info(f"Found {len(links)} navigable links")
             return [self.clean_url(link['url']) for link in links if (link['is_displayed'] == True and self.is_link_valid(link['url']))]
         except Exception as e:
-            self.logger.error(f"Error getting navigable links: {str(e)}")
+            self.logger.error(f"Error getting navigable links: {e!s}")
             return []
 
     def click_element(self, xpath: str) -> bool:
@@ -446,13 +447,13 @@ class Browser:
                 self.logger.info(f"Clicked element at {xpath}")
                 return True
             except ElementClickInterceptedException as e:
-                self.logger.error(f"Error click_element: {str(e)}")
+                self.logger.error(f"Error click_element: {e!s}")
                 return False
         except TimeoutException:
             self.logger.warning("Timeout clicking element.")
             return False
         except Exception as e:
-            self.logger.error(f"Unexpected error clicking element at {xpath}: {str(e)}")
+            self.logger.error(f"Unexpected error clicking element at {xpath}: {e!s}")
             return False
         
     def load_js(self, file_name: str) -> str:
@@ -464,8 +465,6 @@ class Browser:
                 return f.read()
         except FileNotFoundError as e:
             raise Exception(f"Could not find: {path}") from e
-        except Exception as e:
-            raise e
 
     def find_all_inputs(self, timeout=3):
         """Find all inputs elements on the page."""
@@ -474,14 +473,14 @@ class Browser:
                 EC.presence_of_element_located((By.TAG_NAME, "body"))
             )
         except Exception as e:
-            self.logger.error(f"Error waiting for input element: {str(e)}")
+            self.logger.error(f"Error waiting for input element: {e!s}")
             return []
         time.sleep(0.5)
         script = self.load_js("find_inputs.js")
         input_elements = self.driver.execute_script(script)
         return input_elements
 
-    def get_form_inputs(self) -> List[str]:
+    def get_form_inputs(self) -> list[str]:
         """Extract all input from the page and return them."""
         try:
             input_elements = self.find_all_inputs()
@@ -498,7 +497,7 @@ class Browser:
                 if input_type == "checkbox" or input_type == "radio":
                     try:
                         checked_status = "checked" if element.is_selected() else "unchecked"
-                    except Exception as e:
+                    except Exception:
                         continue
                     form_strings.append(f"[{input_name}]({checked_status})")
                 else:
@@ -506,9 +505,10 @@ class Browser:
             return form_strings
 
         except Exception as e:
-            raise e
+            self.logger.error(f"Error extracting form inputs: {e!s}")
+            return []
 
-    def get_buttons_xpath(self) -> List[str]:
+    def get_buttons_xpath(self) -> list[str]:
         """
         Find buttons and return their type and xpath.
         """
@@ -552,7 +552,7 @@ class Browser:
             if btn_type.lower() in button_text.lower() or btn_type.lower() in xpath.lower():
                 try:
                     wait = WebDriverWait(self.driver, timeout)
-                    element = wait.until(
+                    wait.until(
                         EC.element_to_be_clickable((By.XPATH, xpath)),
                         message=f"Button with XPath '{xpath}' not clickable within {timeout} seconds"
                     )
@@ -566,7 +566,7 @@ class Browser:
                     self.logger.warning(f"Timeout waiting for '{button_text}' button at XPath: {xpath}")
                     return False
                 except Exception as e:
-                    self.logger.error(f"Error clicking button '{button_text}' at XPath: {xpath} - {str(e)}")
+                    self.logger.error(f"Error clicking button '{button_text}' at XPath: {xpath} - {e!s}")
                     return False
         self.logger.warning(f"No button matching '{btn_type}' found")
         return False
@@ -603,11 +603,11 @@ class Browser:
                     self.logger.warning(f"Timeout waiting for checkbox {index} to be clickable")
                     continue
                 except Exception as e:
-                    self.logger.error(f"Error ticking checkbox {index}: {str(e)}")
+                    self.logger.error(f"Error ticking checkbox {index}: {e!s}")
                     continue
             return True
         except Exception as e:
-            self.logger.error(f"Error finding checkboxes: {str(e)}")
+            self.logger.error(f"Error finding checkboxes: {e!s}")
             return False
 
     def find_and_click_submission(self, timeout: int = 10) -> bool:
@@ -627,7 +627,7 @@ class Browser:
                 return field["xpath"]
         return None
 
-    def fill_form_inputs(self, input_list: List[str]) -> bool:
+    def fill_form_inputs(self, input_list: list[str]) -> bool:
         """Fill inputs based on a list of [name](value) strings."""
         if not isinstance(input_list, list):
             self.logger.error("input_list must be a list")
@@ -672,10 +672,10 @@ class Browser:
                     self.logger.info(f"Filled {name} with {value}")
             return True
         except Exception as e:
-            self.logger.error(f"Error filling form inputs: {str(e)}")
+            self.logger.error(f"Error filling form inputs: {e!s}")
             return False
     
-    def fill_form(self, input_list: List[str]) -> bool:
+    def fill_form(self, input_list: list[str]) -> bool:
         """Fill form inputs based on a list of [name](value) and submit."""
         if not isinstance(input_list, list):
             self.logger.error("input_list must be a list")
@@ -712,7 +712,7 @@ class Browser:
             time.sleep(0.5)
             return True
         except Exception as e:
-            self.logger.error(f"Error scrolling: {str(e)}")
+            self.logger.error(f"Error scrolling: {e!s}")
             return False
     
     def get_screenshot(self) -> str:
@@ -723,7 +723,7 @@ class Browser:
         self.logger.info("Taking full page screenshot...")
         time.sleep(0.1)
         try:
-            original_zoom = self.driver.execute_script("return document.body.style.zoom || 1;")
+            self.driver.execute_script("return document.body.style.zoom || 1;")
             self.driver.execute_script("document.body.style.zoom='75%'")
             time.sleep(0.1)
             path = os.path.join(self.screenshot_folder, filename)
@@ -732,7 +732,7 @@ class Browser:
             self.driver.save_screenshot(path)
             self.logger.info(f"Full page screenshot saved as {filename}")
         except Exception as e:
-            self.logger.error(f"Error taking full page screenshot: {str(e)}")
+            self.logger.error(f"Error taking full page screenshot: {e!s}")
             return False
         finally:
             self.driver.execute_script("document.body.style.zoom='1'")
@@ -744,7 +744,7 @@ class Browser:
         """
         self.logger.info("Applying web safety measures...")
         script = self.load_js("inject_safety_script.js")
-        input_elements = self.driver.execute_script(script)
+        self.driver.execute_script(script)
 
 if __name__ == "__main__":
     driver = create_driver(headless=False, stealth_mode=True, crx_path="../crx/nopecha.crx")

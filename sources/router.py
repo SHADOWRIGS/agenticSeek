@@ -1,26 +1,28 @@
 import os
-import sys
-import torch
 import random
-from typing import List, Type, Dict
+import sys
 
-from transformers import pipeline
+import torch
 from adaptive_classifier import AdaptiveClassifier
+from transformers import pipeline
 
 from sources.agents.agent import Agent
-from sources.agents.code_agent import CoderAgent
-from sources.agents.casual_agent import CasualAgent
-from sources.agents.planner_agent import FileAgent
 from sources.agents.browser_agent import BrowserAgent
+from sources.agents.casual_agent import CasualAgent
+from sources.agents.code_agent import CoderAgent
+from sources.agents.planner_agent import FileAgent
 from sources.language import LanguageUtility
-from sources.utility import pretty_print, animate_thinking
 from sources.logger import Logger
+from sources.utility import animate_thinking, pretty_print
+
 
 class AgentRouter:
     """
     AgentRouter is a class that selects the appropriate agent based on the user query.
     """
-    def __init__(self, agents: list, supported_language: List[str] = ["en", "fr", "zh"]):
+    def __init__(self, agents: list, supported_language: list[str] | None = None):
+        if supported_language is None:
+            supported_language = ["en", "fr", "zh"]
         self.agents = agents
         self.logger = Logger("router.log")
         self.lang_analysis = LanguageUtility(supported_language=supported_language)
@@ -31,7 +33,7 @@ class AgentRouter:
         self.learn_few_shots_complexity()
         self.asked_clarify = False
     
-    def load_pipelines(self) -> Dict[str, Type[pipeline]]:
+    def load_pipelines(self) -> dict[str, type[pipeline]]:
         """
         Load the pipelines for the text classification used for routing.
         returns:
@@ -54,7 +56,7 @@ class AgentRouter:
         try:
             animate_thinking("Loading LLM router model...", color="status")
             talk_classifier = AdaptiveClassifier.from_pretrained(path)
-        except Exception as e:
+        except Exception:
             raise Exception("Failed to load the routing model. Please run the dl_safetensors.sh script inside llm_router/ directory to download the model.")
         return talk_classifier
 
@@ -409,7 +411,7 @@ class AgentRouter:
         try:
             predictions = self.complexity_classifier.predict(text)
         except Exception as e:
-            pretty_print(f"Error in estimate_complexity: {str(e)}", color="failure")
+            pretty_print(f"Error in estimate_complexity: {e!s}", color="failure")
             return "LOW"
         predictions = sorted(predictions, key=lambda x: x[1], reverse=True)
         if len(predictions) == 0:
@@ -457,10 +459,7 @@ class AgentRouter:
         if complexity == "HIGH":
             pretty_print("Complex task detected, routing to planner agent.", color="info")
             return self.find_planner_agent()
-        try:
-            best_agent = self.router_vote(text, labels, log_confidence=False)
-        except Exception as e:
-            raise e
+        best_agent = self.router_vote(text, labels, log_confidence=False)
         for agent in self.agents:
             if best_agent == agent.role:
                 role_name = agent.role

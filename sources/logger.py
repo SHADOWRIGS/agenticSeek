@@ -1,5 +1,6 @@
-import os
 import logging
+import os
+
 
 class Logger:
     def __init__(self, log_filename):
@@ -29,7 +30,7 @@ class Logger:
             if not os.path.exists(path):
                 os.makedirs(path, exist_ok=True) 
             return True
-        except Exception as e:
+        except Exception:
             self.enabled = False
             return False
     
@@ -47,7 +48,7 @@ class Logger:
         self.log(message, level=logging.ERROR)
 
     def warning(self, message):
-        self.log(message, level=logging.WARN)
+        self.log(message, level=logging.WARNING)
 
 if __name__ == "__main__":
     lg = Logger("test.log")

@@ -1,10 +1,10 @@
-import unittest
 import os
 import sys
+import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from sources.utility import pretty_print, get_color_map, timer_decorator
+from sources.utility import get_color_map, pretty_print, timer_decorator
 
 
 class TestGetColorMap(unittest.TestCase):

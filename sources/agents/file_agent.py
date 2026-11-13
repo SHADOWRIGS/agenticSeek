@@ -1,9 +1,10 @@
 
-from sources.utility import animate_thinking
 from sources.agents.agent import Agent
-from sources.tools.fileFinder import FileFinder
-from sources.tools.BashInterpreter import BashInterpreter
 from sources.memory import Memory
+from sources.tools.BashInterpreter import BashInterpreter
+from sources.tools.fileFinder import FileFinder
+from sources.utility import animate_thinking
+
 
 class FileAgent(Agent):
     def __init__(self, name, prompt_path, provider, verbose=False):

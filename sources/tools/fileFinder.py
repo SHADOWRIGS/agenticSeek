@@ -1,11 +1,13 @@
-import os, sys
-import stat
 import mimetypes
+import os
+import stat
+import sys
 
 if __name__ == "__main__": # if running as a script for individual testing
     sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from sources.tools.tools import Tools
+
 
 class FileFinder(Tools):
     """
@@ -152,9 +154,7 @@ class FileFinder(Tools):
         """
         if not output:
             return True
-        if "Error" in output or "not found" in output:
-            return True
-        return False
+        return bool("Error" in output or "not found" in output)
 
     def interpreter_feedback(self, output: str) -> str:
         """

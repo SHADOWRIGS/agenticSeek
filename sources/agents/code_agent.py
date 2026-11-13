@@ -1,16 +1,17 @@
-import platform
 import asyncio
+import platform
 
-from sources.utility import pretty_print, animate_thinking
 from sources.agents.agent import Agent
-from sources.tools.C_Interpreter import CInterpreter
-from sources.tools.GoInterpreter import GoInterpreter
-from sources.tools.PyInterpreter import PyInterpreter
-from sources.tools.BashInterpreter import BashInterpreter
-from sources.tools.JavaInterpreter import JavaInterpreter
-from sources.tools.fileFinder import FileFinder
 from sources.logger import Logger
 from sources.memory import Memory
+from sources.tools.BashInterpreter import BashInterpreter
+from sources.tools.C_Interpreter import CInterpreter
+from sources.tools.fileFinder import FileFinder
+from sources.tools.GoInterpreter import GoInterpreter
+from sources.tools.JavaInterpreter import JavaInterpreter
+from sources.tools.PyInterpreter import PyInterpreter
+from sources.utility import animate_thinking, pretty_print
+
 
 class CoderAgent(Agent):
     """
