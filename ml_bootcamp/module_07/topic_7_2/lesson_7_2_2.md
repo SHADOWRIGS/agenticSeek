@@ -440,7 +440,6 @@ MLFLOW_TRACKING_URI=http://127.0.0.1:5711 uv run python train.py
 ```text
 artifact_uri: mlflow-artifacts:/1/ef4ea5c2103a46ffab35c0f0e47ced97/artifacts
 model_uri: models:/m-35ae9b8915e94dd1bdcd85ffbaf0f11a   version: 1
-🏃 View run ridge-via-server at: http://127.0.0.1:5711/#/experiments/1/runs/ef4ea5c2103a46ffab35c0f0e47ced97
 ```
 
 Адрес `mlflow-artifacts:/…` означает, что клиент отдаёт файлы серверу по HTTP, а тот кладёт их в свой

@@ -116,15 +116,8 @@ uv run dvc push
 # 64 files pushed
 ```
 
-Адрес записан в `.dvc/config` и попадает в Git — коллеге не нужно ничего настраивать:
-
-```ini
-[core]
-    analytics = false
-    remote = storage
-['remote "storage"']
-    url = /srv/dvc-storage
-```
+Адрес записан в `.dvc/config` (раздел `['remote "storage"']`, ключ `url`) и попадает в Git — коллеге не нужно
+ничего настраивать.
 
 (Здесь и далее путь к каталогу хранилища сокращён: при подготовке урока это был временный каталог.)
 
@@ -308,22 +301,8 @@ train:
 
 Скрипты стадий — обычные программы без единого импорта DVC. `prepare.py` собирает партиции обучающего
 и проверочного окон в `train.csv` и `valid.csv`; `evaluate.py` считает MAE модели и MAE прогноза средним.
-`train.py` целиком:
-
-```python
-params = yaml.safe_load(Path("params.yaml").read_text())["train"]
-train = pd.read_csv("data/prepared/train.csv")
-
-encoder = OneHotEncoder(min_frequency=params["min_frequency"], handle_unknown="infrequent_if_exist")
-features = ColumnTransformer(
-    [("cat", encoder, ["store_id", "product", "dow"]), ("num", StandardScaler(), ["price", "promo"])]
-)
-regressor = TransformedTargetRegressor(Ridge(alpha=params["alpha"]), func=np.log1p, inverse_func=np.expm1)
-model = Pipeline([("features", features), ("model", regressor)]).fit(train, train["units"])
-
-Path("models").mkdir(exist_ok=True)
-joblib.dump(model, "models/model.joblib")
-```
+`train.py` читает раздел `train` из `params.yaml`, обучает пайплайн (one-hot с `min_frequency`, масштабирование,
+`Ridge` на `log1p` целевой переменной) и сохраняет его через `joblib.dump`.
 
 ```bash
 uv run dvc dag            # граф: data/raw.dvc -> prepare -> train -> evaluate (prepare -> evaluate)
@@ -387,17 +366,6 @@ Running stage 'evaluate':
 | `prepare.run_date → 2024-06-30` | выполнена | выполнена | выполнена | другие окна — другие таблицы |
 | добавили партицию за 1 июля (`dvc add data/raw`) | выполнена | — | — | каталог `data/raw` изменился, но окна до 30 июня те же: `train.csv` и `valid.csv` получились байт в байт прежними |
 | дописали комментарий в `src/evaluate.py` | — | — | выполнена | код стадии — её зависимость |
-
-Вывод для второй строки:
-
-```text
-'data/raw.dvc' didn't change, skipping
-Stage 'prepare' didn't change, skipping
-Running stage 'train':
-> python src/train.py
-Running stage 'evaluate':
-> python src/evaluate.py
-```
 
 Четвёртая строка показывает, что сравниваются **хеши содержимого, а не время изменения**: стадия
 выполнилась, но выдала те же файлы — и цепочка остановилась. `make` в такой ситуации пересобрал бы всё.
