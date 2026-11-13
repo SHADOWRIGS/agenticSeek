@@ -5,7 +5,7 @@
 
 | Урок | Название | Тип | Статус |
 |---|---|---|---|
-| 7.1.1 | Scikit-learn pipelines, custom transformers | теория | в разработке |
-| 7.1.2 | Apache Airflow для оркестрации пайплайнов | теория | в разработке |
-| 7.1.3 | Kubeflow Pipelines, MLflow Projects | теория | в разработке |
-| 7.1.4 | ПРАКТИКА: Создание end-to-end ML пайплайна | практика | в разработке |
+| 7.1.1 | [Scikit-learn pipelines, custom transformers](lesson_7_1_1.md) | теория | готов |
+| 7.1.2 | [Apache Airflow для оркестрации пайплайнов](lesson_7_1_2.md) | теория | готов |
+| 7.1.3 | [Kubeflow Pipelines, MLflow Projects](lesson_7_1_3.md) | теория | готов |
+| 7.1.4 | [ПРАКТИКА: Создание end-to-end ML пайплайна](lesson_7_1_4.md) | практика | готов |
