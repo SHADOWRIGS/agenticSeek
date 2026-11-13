@@ -1,0 +1,24 @@
+# Образец: ночное переобучение модели. Запускается таймером nightly-retrain.timer.
+# Пути, пользователя и команду замените на свои. Установка описана в README.md.
+[Unit]
+Description=Nightly model retraining
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# oneshot: юнит считается активным, пока команда не завершится, поэтому таймер не запустит
+# второй экземпляр поверх ещё работающего.
+Type=oneshot
+User=mlops
+Group=mlops
+WorkingDirectory=/opt/ml-project
+Environment=PYTHONUNBUFFERED=1
+# systemd создаст /var/log/ml-project и отдаст его пользователю из User=.
+LogsDirectory=ml-project
+ExecStart=/opt/ml-project/scripts/run_training.sh --name nightly --log-dir /var/log/ml-project -- \
+    /opt/ml-project/.venv/bin/python train.py --config configs/nightly.yaml
+# У oneshot-сервисов тайм-аут запуска по умолчанию выключен; ограничиваем зависшее обучение.
+TimeoutStartSec=6h
+MemoryMax=24G
+CPUQuota=800%
+Nice=5

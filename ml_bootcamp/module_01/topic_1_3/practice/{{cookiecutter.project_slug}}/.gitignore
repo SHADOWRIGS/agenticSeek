@@ -1,0 +1,21 @@
+# Окружение и кеши
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Сборка пакета
+build/
+dist/
+*.egg-info/
+
+# Секреты
+.env
+
+# Данные и артефакты запусков: в Git остаётся только структура папок
+/data/*/*
+!/data/*/.gitkeep
+/models/*
+!/models/.gitkeep
