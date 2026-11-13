@@ -32,7 +32,9 @@
 - [Программа: цель и результат каждого урока](launch/SYLLABUS.md)
 - [Текст лендинга](launch/LANDING.md)
 - [Готовность к запуску продаж](launch/LAUNCH_READINESS.md)
+- [Запуск: продукт первой продажи и шаги владельца](launch/GO_LIVE.md)
 - [Бесплатный образец: состав и тексты](launch/FREE_SAMPLE.md)
+- [Пакет публикаций для запуска](launch/CONTENT_PACK.md)
 - [Чек-листы ревью практических проектов](launch/REVIEW_CHECKLISTS.md)
 - [Нужно решение владельца](launch/OWNER_DECISIONS.md)
 
