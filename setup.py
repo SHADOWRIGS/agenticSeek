@@ -18,7 +18,7 @@ setup(
         "fastapi>=0.115.12",
         "celery>=5.5.1",
         "uvicorn>=0.34.0",
-        "flask>=3.1.0",
+        "flask>=3.1.0§",
         "aiofiles>=24.1.0",
         "pydantic>=2.10.6",
         "pydantic_core>=2.27.2",
