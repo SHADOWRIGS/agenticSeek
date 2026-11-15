@@ -1,0 +1,38 @@
+<!-- Файл сгенерирован tools/build_index.py, вручную не редактировать -->
+# Модуль 2: DATA-CENTRIC MACHINE LEARNING
+
+## [Тема 2.1: Продвинутый Pandas](topic_2_1/README.md)
+
+| Урок | Название | Тип | Статус |
+|---|---|---|---|
+| 2.1.1 | [MultiIndex, pivot tables, сложные группировки](topic_2_1/lesson_2_1_1.md) | теория | готов |
+| 2.1.2 | [Оптимизация памяти: dtypes, chunks, sparse arrays](topic_2_1/lesson_2_1_2.md) | теория | готов |
+| 2.1.3 | [Время и даты: timezones, resampling, rolling windows](topic_2_1/lesson_2_1_3.md) | теория | готов |
+| 2.1.4 | [ПРАКТИКА: Анализ временных рядов продаж](topic_2_1/lesson_2_1_4.md) | практика | готов |
+
+## [Тема 2.2: Высокопроизводительный NumPy](topic_2_2/README.md)
+
+| Урок | Название | Тип | Статус |
+|---|---|---|---|
+| 2.2.1 | [Векторизация операций, broadcasting, ufuncs](topic_2_2/lesson_2_2_1.md) | теория | готов |
+| 2.2.2 | [Advanced indexing: boolean, fancy, structured arrays](topic_2_2/lesson_2_2_2.md) | теория | готов |
+| 2.2.3 | [NumPy с Cython и Numba для ускорения](topic_2_2/lesson_2_2_3.md) | теория | готов |
+| 2.2.4 | [ПРАКТИКА: Реализация алгоритмов с нуля на NumPy](topic_2_2/lesson_2_2_4.md) | практика | готов |
+
+## [Тема 2.3: Feature Engineering мастерство](topic_2_3/README.md)
+
+| Урок | Название | Тип | Статус |
+|---|---|---|---|
+| 2.3.1 | [Создание features для временных рядов](topic_2_3/lesson_2_3_1.md) | теория | готов |
+| 2.3.2 | [Target encoding, mean encoding, likelihood encoding](topic_2_3/lesson_2_3_2.md) | теория | готов |
+| 2.3.3 | [Автоматический feature engineering с FeatureTools](topic_2_3/lesson_2_3_3.md) | теория | готов |
+| 2.3.4 | [ПРАКТИКА: Feature engineering для Kaggle конкурса](topic_2_3/lesson_2_3_4.md) | практика | готов |
+
+## [Тема 2.4: Продвинутая визуализация](topic_2_4/README.md)
+
+| Урок | Название | Тип | Статус |
+|---|---|---|---|
+| 2.4.1 | [Plotly и интерактивные дашборды](topic_2_4/lesson_2_4_1.md) | теория | готов |
+| 2.4.2 | [Визуализация высокоразмерных данных (t-SNE, UMAP)](topic_2_4/lesson_2_4_2.md) | теория | готов |
+| 2.4.3 | [Создание отчетов с помощью Pandas Profiling](topic_2_4/lesson_2_4_3.md) | теория | готов |
+| 2.4.4 | [ПРАКТИКА: Создание интерактивного дашборда для EDA](topic_2_4/lesson_2_4_4.md) | практика | готов |

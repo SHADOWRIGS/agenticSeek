@@ -1,0 +1,8 @@
+{
+  "project_name": "ML Project",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-').replace('_', '-') }}",
+  "package_name": "{{ cookiecutter.project_slug.replace('-', '_') }}",
+  "author": "Your Name",
+  "python_version": "3.12",
+  "description": "ML-проект, созданный из шаблона курса"
+}

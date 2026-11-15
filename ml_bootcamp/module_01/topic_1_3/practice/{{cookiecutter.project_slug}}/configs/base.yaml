@@ -1,0 +1,11 @@
+experiment_name: baseline
+seed: 42
+output_dir: models
+
+data:
+  dataset: breast_cancer
+  test_size: 0.2
+
+model:
+  C: 1.0
+  max_iter: 1000
