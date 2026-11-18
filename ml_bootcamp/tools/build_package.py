@@ -40,7 +40,7 @@ MODULE_TITLES = {
     4: "Ансамбли: деревья, случайный лес, бустинг, подбор гиперпараметров",
 }
 
-SKIP_NAMES = {DRAFT_MARKER, "README.md"}  # оглавления для архива создаются заново
+INDEX_RE = re.compile(r"module_\d+(/topic_\d+_\d+)?/README\.md")  # оглавления для архива создаются заново
 SUSPICIOUS = re.compile(r"(reference|solution|эталон|решени)", re.IGNORECASE)
 LINK_RE = re.compile(r"\]\(([^)\s]+)\)")
 FENCE_RE = re.compile(r"```.*?```", re.DOTALL)
@@ -168,6 +168,7 @@ def generated_readmes(modules: list[Module], owner: str, build_id: str) -> dict[
 def check_links(texts: dict[Path, str], names: set[Path]) -> list[str]:
     """Относительные ссылки Markdown должны вести на файлы архива."""
     problems = []
+    folders = {parent for name in names for parent in name.parents}
     for path, text in sorted(texts.items()):
         for match in LINK_RE.finditer(FENCE_RE.sub("", text)):
             target = match.group(1).split("#")[0]
@@ -183,7 +184,7 @@ def check_links(texts: dict[Path, str], names: set[Path]) -> list[str]:
                 elif part != ".":
                     parts.append(part)
             resolved = Path(*parts) if parts else Path(".")
-            if resolved not in names:
+            if resolved not in names and resolved not in folders:
                 problems.append(f"{path}: ссылка «{target}» не ведёт на файл архива")
     return problems
 
@@ -208,7 +209,7 @@ def collect(modules: list[Module], owner: str, build_id: str) -> tuple[dict[Path
         if not files:
             problems.append(f"в папке {directory} нет отслеживаемых файлов")
         for path in files:
-            if path.name in SKIP_NAMES and not path.is_relative_to(CAPSTONE_DIR):
+            if path.name == DRAFT_MARKER or INDEX_RE.fullmatch(path.as_posix()):
                 continue
             if "{{" not in str(path) and SUSPICIOUS.search(path.name):
                 problems.append(f"{path}: имя файла похоже на эталонное решение")

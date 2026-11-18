@@ -26,6 +26,8 @@ ABOUT = [
     "- [Готовность к запуску продаж](launch/LAUNCH_READINESS.md)",
     "- [Запуск: продукт первой продажи и шаги владельца](launch/GO_LIVE.md)",
     "- [Текст страницы продукта «Классический ML для табличных данных»](launch/LANDING_CLASSIC_ML.md)",
+    "- [Карточка товара и сборка архива для площадки](launch/STORE_LISTING.md)",
+    "- [Итоговый проект курса «Классический ML для табличных данных»](capstone_classic_ml/README.md)",
     "- [Бесплатный образец: состав и тексты](launch/FREE_SAMPLE.md)",
     "- [Пакет публикаций для запуска](launch/CONTENT_PACK.md)",
     "- [Чек-листы ревью практических проектов](launch/REVIEW_CHECKLISTS.md)",

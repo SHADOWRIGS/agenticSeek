@@ -154,10 +154,10 @@ def test_numeric_psi_matches_definition_on_random_data():
 
 def test_numeric_psi_value_equal_to_edge_goes_to_left_bin():
     reference = np.arange(1, 101, dtype="float64")
-    current = np.quantile(reference, np.arange(1, 10) / 10)  # девять значений ровно на границах
+    edge = float(np.quantile(reference, 0.1))  # первая граница: 10.9
+    current = [edge, 15.0, 15.0, 15.0]  # 15 лежит во второй корзине при любом правиле
+    assert sd.numeric_psi(reference, current) == pytest.approx(slow_psi([0.1] * 10, [0.25, 0.75] + [0.0] * 8))
     assert sd.numeric_psi(reference, current) == pytest.approx(slow_numeric_psi(reference, current), abs=1e-12)
-    shares = [1 / 9] * 9 + [0.0]
-    assert sd.numeric_psi(reference, current) == pytest.approx(slow_psi([0.1] * 10, shares))
 
 
 def test_numeric_psi_merges_repeated_edges():
@@ -440,13 +440,15 @@ def test_report_missing_share_growth_is_drift(frames, missing, status):
 def test_report_missing_share_is_compared_with_reference(frames):
     reference, current = frames
     reference, current = reference.copy(), current.copy()
-    reference.loc[reference.index[:1000], "price"] = np.nan  # 20 % пропусков в эталоне
-    current.loc[current.index[:1100], "price"] = np.nan  # 22 % в текущей выборке
-    column = sd.drift_report(reference, current, numeric=["price"], categorical=[])["price"]
-    assert column["missing_reference"] == pytest.approx(0.2)
-    assert column["missing_current"] == pytest.approx(0.22)
-    assert column["status"] == "ok"
-    assert column["psi_noise"] == pytest.approx(sd.psi_noise(4000, 3900, 10))
+    for name in ["price", "store_id"]:
+        reference.loc[reference.index[:1000], name] = None  # 20 % пропусков в эталоне
+        current.loc[current.index[:1100], name] = None  # 22 % в текущей выборке
+    report = sd.drift_report(reference, current, numeric=["price"], categorical=["store_id"])
+    for name, groups in [("price", 10), ("store_id", 4)]:
+        assert report[name]["missing_reference"] == pytest.approx(0.2)
+        assert report[name]["missing_current"] == pytest.approx(0.22)
+        assert report[name]["status"] == "ok"
+        assert report[name]["psi_noise"] == pytest.approx(sd.psi_noise(4000, 3900, groups))
 
 
 @pytest.mark.parametrize(("count", "status"), [(0, "ok"), (25, "ok"), (50, "drift"), (600, "drift")])

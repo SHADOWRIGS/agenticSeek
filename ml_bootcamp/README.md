@@ -11,13 +11,13 @@
 | 4 | [ENSEMBLE MASTERY & HYPERPARAMETER OPTIMIZATION](module_04/README.md) | 16 / 16 |
 | 5 | [DEEP LEARNING & MODERN ARCHITECTURES](module_05/README.md) | 4 / 16 |
 | 6 | [LOW-LEVEL ML & PERFORMANCE OPTIMIZATION](module_06/README.md) | 0 / 16 |
-| 7 | [ML ENGINEERING & MLOPS](module_07/README.md) | 12 / 16 |
+| 7 | [ML ENGINEERING & MLOPS](module_07/README.md) | 16 / 16 |
 | 8 | [REINFORCEMENT LEARNING & AUTONOMOUS SYSTEMS](module_08/README.md) | 0 / 16 |
 | 9 | [ML SYSTEM DESIGN & ARCHITECTURE](module_09/README.md) | 0 / 16 |
 | 10 | [CAPSTONE PROJECT: END-TO-END AUTONOMOUS SYSTEM](module_10/README.md) | 0 / 16 |
 | 11 | [CAREER & INTERVIEW PREPARATION](module_11/README.md) | 0 / 12 |
 
-Всего готово: 80 из 172 уроков.
+Всего готово: 84 из 172 уроков.
 
 ## Как устроены материалы
 
@@ -34,6 +34,8 @@
 - [Готовность к запуску продаж](launch/LAUNCH_READINESS.md)
 - [Запуск: продукт первой продажи и шаги владельца](launch/GO_LIVE.md)
 - [Текст страницы продукта «Классический ML для табличных данных»](launch/LANDING_CLASSIC_ML.md)
+- [Карточка товара и сборка архива для площадки](launch/STORE_LISTING.md)
+- [Итоговый проект курса «Классический ML для табличных данных»](capstone_classic_ml/README.md)
 - [Бесплатный образец: состав и тексты](launch/FREE_SAMPLE.md)
 - [Пакет публикаций для запуска](launch/CONTENT_PACK.md)
 - [Чек-листы ревью практических проектов](launch/REVIEW_CHECKLISTS.md)
