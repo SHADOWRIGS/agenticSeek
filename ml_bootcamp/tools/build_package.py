@@ -5,8 +5,11 @@
 
     python3 ml_bootcamp/tools/build_package.py --owner "Имя правообладателя"
 
-Результат — `ml_bootcamp/dist/classic-ml-tabular-<версия>.zip`. Сборка воспроизводима: при том же
-коммите и тех же аргументах архив совпадает до байта, поэтому его контрольную сумму можно сверять.
+Результат — `ml_bootcamp/dist/classic-ml-tabular-<версия>.zip`. С ключом `--sample` собирается бесплатный
+образец для открытого доступа: `classic-ml-sample-<версия>.zip` (состав — в launch/FREE_SAMPLE.md).
+
+Сборка воспроизводима: при том же коммите и тех же аргументах архив совпадает до байта, поэтому его
+контрольную сумму можно сверять.
 
 В архив попадают только файлы, отслеживаемые Git, из модулей продукта и папки итогового проекта.
 Перед упаковкой скрипт проверяет продукт и останавливается, если найдёт:
@@ -227,6 +230,83 @@ def collect(modules: list[Module], owner: str, build_id: str) -> tuple[dict[Path
     return content, problems
 
 
+SAMPLE_SLUG = "classic-ml-sample"
+URL_PLACEHOLDER = "<ссылка на страницу курса>"
+# Состав бесплатного образца: см. launch/FREE_SAMPLE.md
+SAMPLE_FILES = (
+    "module_02/topic_2_1/lesson_2_1_1.md",
+    "module_02/topic_2_1/lesson_2_1_4.md",
+    "module_02/topic_2_1/sales_data.py",
+    "module_03/topic_3_1/lesson_3_1_2.md",
+    "module_03/topic_3_1/flats_data.py",
+)
+SAMPLE_DIRS = ("module_02/topic_2_1/practice",)
+
+
+def collect_sample(owner: str, product_url: str, build_id: str) -> tuple[dict[Path, bytes], list[str]]:
+    """Содержимое бесплатного образца — того, что выкладывается в открытый доступ."""
+    problems: list[str] = []
+    paths = [Path(name) for name in SAMPLE_FILES]
+    for directory in SAMPLE_DIRS:
+        paths += tracked_files(directory)
+    content: dict[Path, bytes] = {}
+    for path in paths:
+        if not (COURSE_DIR / path).exists():
+            problems.append(f"нет файла {path}")
+            continue
+        content[path] = (COURSE_DIR / path).read_bytes()
+
+    readme = [
+        f"# {PRODUCT_TITLE} — бесплатный образец",
+        "",
+        "Три материала из курса. Они здесь целиком, без сокращений.",
+        "",
+        "- [Урок о группировках и сводных таблицах в pandas](module_02/topic_2_1/lesson_2_1_1.md) —",
+        "  с реальными выводами и замерами скорости.",
+        "- [Практический проект: анализ продаж сети магазинов](module_02/topic_2_1/lesson_2_1_4.md).",
+        "  Заготовка кода и 24 теста: когда все тесты проходят, проект готов.",
+        "- [Урок о том, как читать коэффициенты и p-value](module_03/topic_3_1/lesson_3_1_2.md)",
+        "  и когда им нельзя верить.",
+        "",
+        "## Как попробовать за десять минут",
+        "",
+        "Нужен [uv](https://docs.astral.sh/uv/). В папке образца:",
+        "",
+        "```bash",
+        "uv init --bare --python 3.12",
+        "uv add pandas numpy pyarrow",
+        "uv add --dev pytest",
+        "cd module_02/topic_2_1/practice",
+        "uv run pytest -q",
+        "```",
+        "",
+        "Все тесты упадут — так и задумано. Откройте `sales_analysis.py`: в каждой функции описано, что она должна",
+        "делать. Реализуйте первую — и часть тестов станет зелёной.",
+        "",
+        "## Что в полном курсе",
+        "",
+        "64 урока, 16 практических проектов с автотестами и итоговый проект: рабочее окружение, данные,",
+        "классический ML, ансамбли.",
+        "",
+        f"Программа и условия: {product_url}",
+        "",
+        "## Условия использования",
+        "",
+        f"© {owner}, 2026. Образец можно читать, запускать и использовать для личного обучения; ссылкой на него",
+        "можно делиться. Копировать материалы на другие площадки и включать их в другие курсы без согласия",
+        "правообладателя нельзя.",
+        "",
+        "---",
+        "",
+        f"Версия {VERSION}, сборка {build_id}.",
+    ]
+    content[Path("README.md")] = ("\n".join(readme) + "\n").encode("utf-8")
+
+    texts = {path: data.decode("utf-8") for path, data in content.items() if path.suffix == ".md"}
+    problems += check_links(texts, set(content))
+    return content, problems
+
+
 def write_zip(content: dict[Path, bytes], destination: Path, top_folder: str) -> None:
     destination.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(destination, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
@@ -242,20 +322,25 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--owner", default=OWNER_PLACEHOLDER, help="правообладатель для LICENSE.md")
     parser.add_argument("--out", type=Path, default=COURSE_DIR / "dist", help="папка для архива")
+    parser.add_argument("--sample", action="store_true", help="собрать бесплатный образец вместо продукта")
+    parser.add_argument("--product-url", default=URL_PLACEHOLDER, help="адрес страницы курса для README образца")
     args = parser.parse_args()
 
     plan = parse_plan(PLAN_PATH.read_text(encoding="utf-8"))
     modules = [module for module in plan if module.number in PRODUCT_MODULES]
     build_id = git("rev-parse", "--short", "HEAD").strip()
 
-    content, problems = collect(modules, args.owner, build_id)
+    if args.sample:
+        content, problems = collect_sample(args.owner, args.product_url, build_id)
+    else:
+        content, problems = collect(modules, args.owner, build_id)
     if problems:
         print("Архив не собран. Найдены проблемы:")
         for problem in problems:
             print(f"  - {problem}")
         return 1
 
-    top_folder = f"{PRODUCT_SLUG}-{VERSION}"
+    top_folder = f"{SAMPLE_SLUG if args.sample else PRODUCT_SLUG}-{VERSION}"
     destination = args.out / f"{top_folder}.zip"
     write_zip(content, destination, top_folder)
 
@@ -265,7 +350,9 @@ def main() -> int:
     print(f"Файлов: {len(content)}, уроков: {lessons}, размер: {destination.stat().st_size / 1e6:.1f} МБ")
     print(f"SHA-256: {digest}")
     if args.owner == OWNER_PLACEHOLDER:
-        print("Внимание: правообладатель не указан — в LICENSE.md стоит заглушка. Передайте --owner.")
+        print("Внимание: правообладатель не указан — в условиях использования стоит заглушка. Передайте --owner.")
+    if args.sample and args.product_url == URL_PLACEHOLDER:
+        print("Внимание: адрес страницы курса не указан — в README образца стоит заглушка. Передайте --product-url.")
     return 0
 
 
