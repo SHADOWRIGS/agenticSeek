@@ -1,0 +1,12 @@
+.venv
+.git
+__pycache__
+.pytest_cache
+.ruff_cache
+tests
+k8s
+monitoring
+compose.yaml
+Dockerfile
+*.md
+.env

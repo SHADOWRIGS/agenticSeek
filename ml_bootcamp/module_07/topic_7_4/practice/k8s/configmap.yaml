@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sales-service-config
+data:
+  MODEL_DIR: /app/model
+  OMP_NUM_THREADS: "1"

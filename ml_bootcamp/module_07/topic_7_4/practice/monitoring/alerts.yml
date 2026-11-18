@@ -1,0 +1,50 @@
+groups:
+  - name: sales-service
+    rules:
+      - alert: SalesServiceDown
+        expr: up{job="sales-service"} == 0
+        for: 15s
+        labels:
+          severity: page
+        annotations:
+          summary: "Сервис прогноза не отвечает на сбор метрик"
+      - alert: SalesHighErrorRate
+        expr: >
+          sum(rate(sales_requests_total{status=~"5.."}[1m]))
+          / sum(rate(sales_requests_total[1m])) > 0.01
+        for: 30s
+        labels:
+          severity: page
+        annotations:
+          summary: "Больше 1 % запросов завершаются ошибкой сервиса"
+      - alert: SalesSlowPredict
+        expr: >
+          histogram_quantile(0.95, sum by (le) (
+            rate(sales_request_duration_seconds_bucket{endpoint="/predict"}[1m])
+          )) > 0.25
+        for: 30s
+        labels:
+          severity: ticket
+        annotations:
+          summary: "p95 времени ответа /predict выше 250 мс"
+      - alert: SalesUnknownCategories
+        expr: >
+          sum(rate(sales_unknown_category_total[1m]))
+          / sum(rate(sales_predictions_total[1m])) > 0.01
+        for: 30s
+        labels:
+          severity: ticket
+        annotations:
+          summary: "Больше 1 % строк содержат магазин или товар, которых не было в обучении"
+      - alert: SalesFeatureDrift
+        expr: sales_feature_psi > 0.25
+        labels:
+          severity: ticket
+        annotations:
+          summary: "PSI признака {{ $labels.feature }} равен {{ $value }}"
+      - alert: SalesDriftReportStale
+        expr: time() - sales_drift_report_timestamp_seconds > 2 * 86400
+        labels:
+          severity: ticket
+        annotations:
+          summary: "Отчёт о дрейфе не обновлялся больше двух суток"

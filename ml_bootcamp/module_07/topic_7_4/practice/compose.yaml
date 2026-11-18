@@ -1,0 +1,33 @@
+# Стенд практики 7.4.4: сервис, Prometheus, Pushgateway и Grafana (разбор — урок 7.4.3).
+#   docker compose up -d --build      запуск
+#   docker compose down -v            остановка с удалением томов
+services:
+  service:
+    build: .
+    image: sales-service:1.0.0
+    ports:
+      - "127.0.0.1:8000:8000"
+
+  prometheus:
+    image: prom/prometheus:v3.16.0
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/alerts.yml:/etc/prometheus/alerts.yml:ro
+    ports:
+      - "127.0.0.1:9090:9090"
+
+  pushgateway:
+    image: prom/pushgateway:v1.11.5
+    ports:
+      - "127.0.0.1:9091:9091"
+
+  grafana:
+    image: grafana/grafana:13.3.1
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports:
+      - "127.0.0.1:3000:3000"
