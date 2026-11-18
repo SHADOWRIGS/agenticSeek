@@ -50,8 +50,12 @@ uv run pytest -q -k TestSummarize
 типов в pandas):
 
 ```bash
-uv run python -W error -m pytest -q
+uv run python -W error -m pytest -q -p no:dash
 ```
+
+Ключ `-p no:dash` нужен, если в том же окружении установлен Dash (тема 2.4): его плагин для pytest
+при загрузке вызывает предупреждение, и под `-W error` запуск обрывается ещё до ваших тестов. Если Dash
+не установлен, ключ ни на что не влияет.
 
 Проверка стиля:
 
